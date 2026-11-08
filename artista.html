@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artista · Abre a Porta</title>
+<meta name="description" content="Conheça o artista, veja vídeos, fotos e agenda, e peça um orçamento para o seu evento.">
+<meta name="theme-color" content="#0E0B1A">
+<link rel="icon" type="image/png" href="site/icone-abreaporta.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site/estilo.css">
+<style>
+.capa{position:relative;min-height:560px;display:flex;align-items:flex-end;background-size:cover;background-position:center}
+.capa .wrap{width:100%;padding-top:60px;padding-bottom:50px;display:flex;flex-direction:column;gap:16px}
+.capa h1{font-size:clamp(56px,10vw,128px);line-height:.86;letter-spacing:-.06em}
+.capa .acoes{display:flex;gap:10px;flex-wrap:wrap}
+.vidro{background:rgba(14,11,26,.55);border:1px solid rgba(255,255,255,.35);color:#fff}
+.fatos{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:24px}
+.fato{padding:18px;border-radius:18px;background:var(--card);border:1px solid var(--borda)}
+.fato span{font-size:12px;font-weight:800;color:var(--t4);letter-spacing:.06em;text-transform:uppercase}
+.fato b{display:block;margin-top:4px;font-size:19px;letter-spacing:-.02em}
+.dois{display:flex;gap:40px;flex-wrap:wrap}
+.dois > div{flex:1 1 420px;min-width:0}
+h2.t{font-size:clamp(30px,4vw,44px);margin:8px 0 18px}
+.release .selo{color:var(--ouro)!important}
+.release p{font-size:17px;color:var(--t2);margin-bottom:12px}
+.videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.videos iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:16px;background:var(--card)}
+.galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.galeria a{display:block;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:var(--card)}
+.galeria img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.galeria a:hover img{transform:scale(1.04)}
+.kit{border-radius:28px;background:var(--creme);color:var(--noite);padding:clamp(22px,4vw,36px);display:flex;flex-wrap:wrap;gap:30px}
+.kit .t{flex:1 1 280px}
+.kit .selo{color:#5B2BC9}
+.arqs{flex:2 1 480px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.arq{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:#fff;border:1px solid #E4DED0;color:var(--noite)}
+.arq:hover{border-color:#5B2BC9}
+.arq i{width:44px;height:44px;border-radius:12px;background:var(--noite);color:var(--ouro);display:grid;place-items:center;font-style:normal;font-weight:900;font-size:11px;flex:none}
+.arq b{display:block;font-size:15px}
+.arq span{font-size:12px;color:#6B6680}
+.agenda{display:flex;flex-direction:column;gap:10px}
+.outros{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.outro{display:flex;align-items:center;gap:12px;padding:12px;border-radius:18px;background:var(--card);border:1px solid var(--borda);color:#fff}
+.outro .foto{width:60px;height:60px;border-radius:50%;font-size:18px;flex:none}
+.fixo{position:sticky;bottom:0;z-index:10;background:rgba(14,11,26,.95);border-top:1px solid var(--borda);padding:10px 0}
+.fixo .wrap{display:flex;align-items:center;gap:14px}
+.fixo .btn{margin-left:auto;min-height:46px}
+.naoachou{padding:120px 20px;text-align:center;display:flex;flex-direction:column;gap:16px;align-items:center}
+</style>
+</head>
+<body>
+<script src="site/dados.js"></script>
+
+<header class="topo-site"><div class="wrap topo">
+  <a href="./" aria-label="Abre a Porta, início"><img src="site/logo-abreaporta.png" alt="Abre a Porta"></a>
+  <nav aria-label="Menu"><a href="./#artistas">Artistas</a><a href="./#agenda">Agenda</a><a href="./#como">Como contratar</a><a href="./#contato">Contato</a></nav>
+  <a class="btn ouro" href="./#orcamento" id="topoOrc">Pedir orçamento</a>
+</div></header>
+
+<main id="conteudo"></main>
+
+<footer class="rodape">
+  <img src="site/icone-abreaporta.png" alt="">
+  <span>© <span id="ano"></span> Abre a Porta · abreaporta.com.br</span>
+  <span>Desenvolvido por Abre a Porta · artista v1.0</span>
+</footer>
+
+<script>
+(function () {
+  var S = window.SITE || { artistas: [], shows: [] };
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var iniciais = function (n) { return n.split(' ').filter(function (p) { return p.length > 2; }).map(function (p) { return p[0]; }).join('').slice(0, 2).toUpperCase(); };
+  $('ano').textContent = new Date().getFullYear();
+
+  var id = new URLSearchParams(location.search).get('a');
+  var a = S.artistas.filter(function (x) { return x.id === id && x.publicado; })[0];
+  if (!a) {
+    $('conteudo').innerHTML = '<div class="naoachou"><h1 style="font-size:44px">Artista não encontrado</h1><p style="color:var(--t3)">Veja todos os artistas da agência.</p><a class="btn ouro" href="./#artistas">Ver os artistas</a></div>';
+    return;
+  }
+  document.title = a.nome + ' · Abre a Porta';
+
+  var orc = function () {
+    var msg = 'Olá! Quero um orçamento do ' + a.nome + ' pelo site da Abre a Porta.';
+    return S.whatsapp ? 'https://wa.me/' + S.whatsapp + '?text=' + encodeURIComponent(msg) : './#orcamento';
+  };
+  var ext = S.whatsapp ? ' target="_blank" rel="noopener"' : '';
+  $('topoOrc').href = orc(); if (S.whatsapp) { $('topoOrc').target = '_blank'; $('topoOrc').rel = 'noopener'; }
+
+  var fundoCapa = a.foto
+    ? 'background-image:linear-gradient(0deg,#0E0B1A 0%,rgba(14,11,26,.15) 55%,rgba(14,11,26,.55) 100%),url(' + esc(a.foto) + ')'
+    : 'background-image:linear-gradient(0deg,#0E0B1A 0%,rgba(14,11,26,.2) 55%,rgba(14,11,26,.6) 100%),radial-gradient(circle at 70% 40%,' + esc(a.cor || '#FF8A00') + ' 0%,#3B1F7A 45%,#0E0B1A 85%)';
+
+  var h = '';
+  h += '<div class="capa" style="' + fundoCapa + '"><div class="wrap">';
+  h += '<div style="display:flex;gap:8px;flex-wrap:wrap">' + (a.estilo ? '<span class="chip" style="background:var(--ouro);color:var(--noite)">' + esc(a.estilo.toUpperCase()) + '</span>' : '') + (a.cidade ? '<span class="chip">' + esc(a.cidade) + '</span>' : '') + '</div>';
+  h += '<h1>' + esc(a.nome) + '</h1>';
+  if (a.frase) h += '<p style="font-size:19px;color:var(--creme);max-width:52ch">' + esc(a.frase) + '</p>';
+  h += '<div class="acoes"><a class="btn ouro" href="' + orc() + '"' + ext + '>Pedir orçamento</a>';
+  if (a.presskit && a.presskit.length) h += '<a class="btn vidro" href="#presskit">Press kit</a>';
+  if (a.instagram) h += '<a class="btn vidro" href="https://instagram.com/' + esc(a.instagram) + '" target="_blank" rel="noopener">Instagram</a>';
+  if (a.site) h += '<a class="btn vidro" href="' + esc(a.site) + '" target="_blank" rel="noopener">Site oficial</a>';
+  h += '</div></div></div>';
+
+  if (a.fatos && a.fatos.length) {
+    h += '<div class="wrap"><div class="fatos">' + a.fatos.map(function (f) { return '<div class="fato"><span>' + esc(f.titulo) + '</span><b>' + esc(f.valor) + '</b></div>'; }).join('') + '</div></div>';
+  }
+
+  var temRel = a.release && a.release.length, temVid = a.videos && a.videos.length;
+  if (temRel || temVid) {
+    h += '<section class="s"><div class="wrap dois">';
+    if (temRel) h += '<div class="release"><p class="selo">SOBRE</p><h2 class="t">Quem é ' + esc(a.nome) + '</h2>' + a.release.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>';
+    if (temVid) {
+      h += '<div><p class="selo">VÍDEOS</p><h2 class="t">Veja o show</h2><div class="videos">' + a.videos.map(function (v) {
+        var m = String(v).match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/);
+        return m ? '<iframe src="https://www.youtube-nocookie.com/embed/' + m[1] + '" title="Vídeo de ' + esc(a.nome) + '" loading="lazy" allowfullscreen></iframe>' : '';
+      }).join('') + '</div></div>';
+    }
+    h += '</div></section>';
+  }
+
+  if (a.fotos && a.fotos.length) {
+    h += '<section class="s" style="padding-top:0"><div class="wrap"><p class="selo">FOTOS</p><h2 class="t">Galeria</h2><div class="galeria">' +
+      a.fotos.map(function (f) { return '<a href="' + esc(f) + '" target="_blank" rel="noopener"><img src="' + esc(f) + '" alt="Foto de ' + esc(a.nome) + '" loading="lazy"></a>'; }).join('') + '</div></div></section>';
+  }
+
+  if (a.presskit && a.presskit.length) {
+    h += '<section class="s" id="presskit" style="padding-top:0"><div class="wrap"><div class="kit"><div class="t"><p class="selo">PARA CONTRATANTES</p><h2 class="t" style="margin-bottom:10px">Press kit</h2><p style="color:#4A4560">Tudo que a sua casa ou produção precisa para divulgar e montar o palco.</p></div><div class="arqs">' +
+      a.presskit.map(function (k) { return '<a class="arq" href="' + esc(k.arquivo) + '" download target="_blank" rel="noopener"><i>' + esc(k.tipo || 'ARQ') + '</i><div><b>' + esc(k.nome) + '</b><span>Baixar</span></div></a>'; }).join('') + '</div></div></div></section>';
+  }
+
+  var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  var dias = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'], meses = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+  var shows = (S.shows || []).filter(function (s) { return s.artista === a.id; }).map(function (s) { var p = s.data.split('-'); return Object.assign({}, s, { d: new Date(+p[0], +p[1] - 1, +p[2]) }); })
+    .filter(function (s) { return s.d >= hoje; }).sort(function (x, y) { return x.d - y.d; });
+  h += '<section class="s" style="padding-top:' + (temRel || temVid ? '0' : '60px') + '"><div class="wrap"><p class="selo">AGENDA</p><h2 class="t">Próximos shows</h2><div class="agenda">';
+  h += shows.length ? shows.map(function (s) {
+    return '<div class="show"><div class="d"><span>' + dias[s.d.getDay()] + '</span><b>' + ('0' + s.d.getDate()).slice(-2) + '</b><span>' + meses[s.d.getMonth()] + '</span></div><div class="q"><strong>' + (s.fechado ? 'Evento fechado' : esc(s.local)) + '</strong><p>' + esc(s.cidade || '') + '</p></div>' +
+      (s.fechado ? '<span class="chip">Data reservada</span>' : (s.link ? '<a class="btn linha" style="min-height:44px" href="' + esc(s.link) + '" target="_blank" rel="noopener">Ingressos</a>' : '')) + '</div>';
+  }).join('') : '<p class="vazio">Datas abertas. <a href="' + orc() + '"' + ext + '>Consulte a disponibilidade</a> para o seu evento.</p>';
+  h += '</div></div></section>';
+
+  var outros = S.artistas.filter(function (x) { return x.publicado && x.id !== a.id; });
+  if (outros.length) {
+    h += '<section class="s" style="padding-top:0"><div class="wrap"><p class="selo">TAMBÉM NA AGÊNCIA</p><h2 class="t">Outros artistas</h2><div class="outros">' + outros.map(function (o) {
+      var f = o.foto ? 'background-image:url(' + esc(o.foto) + ')' : 'background-image:radial-gradient(circle at 50% 115%,' + esc(o.cor || '#7C4DDB') + ' 0%,#1F1A36 80%)';
+      return '<a class="outro" href="artista.html?a=' + encodeURIComponent(o.id) + '"><span class="foto" style="' + f + '">' + (o.foto ? '' : esc(iniciais(o.nome))) + '</span><span><b style="display:block">' + esc(o.nome) + '</b><span style="font-size:13px;color:var(--t3)">' + esc(o.estilo || '') + '</span></span></a>';
+    }).join('') + '</div></div></section>';
+  }
+
+  h += '<div class="fixo"><div class="wrap"><b style="font-size:17px">' + esc(a.nome) + '</b><a class="btn ouro" href="' + orc() + '"' + ext + '>Verificar data</a></div></div>';
+  $('conteudo').innerHTML = h;
+})();
+</script>
+</body>
+</html>

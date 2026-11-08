@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abre a Porta · Agência de shows e eventos</title>
+<meta name="description" content="Agência de shows e eventos em Curitiba. Artistas, produção e aluguel de equipamentos de som e luz para a sua festa.">
+<meta name="theme-color" content="#0E0B1A">
+<link rel="icon" type="image/png" href="site/icone-abreaporta.png">
+<meta property="og:title" content="Abre a Porta · Agência de shows e eventos">
+<meta property="og:description" content="O show certo para lotar a sua festa.">
+<meta property="og:image" content="https://abreaporta.com.br/site/icone-abreaporta.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site/estilo.css">
+<style>
+.hero{position:relative;overflow:hidden;padding:56px 0 70px}
+.hero:before{content:"";position:absolute;right:-220px;top:-220px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,138,0,.26),rgba(124,77,219,.18) 50%,transparent);pointer-events:none}
+.hero .wrap{position:relative;display:flex;flex-wrap:wrap;gap:40px;align-items:center}
+.hero .txt{flex:1 1 440px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.hero h1{font-size:clamp(44px,6.5vw,82px);line-height:.93}
+.hero h1 span{color:var(--ouro)}
+.hero .acoes{display:flex;gap:12px;flex-wrap:wrap}
+.mosaico{flex:1 1 440px;min-width:0;display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:170px;gap:12px}
+.mosaico a{border-radius:22px;padding:16px;display:flex;align-items:flex-end;font-weight:900;font-size:15px;color:#fff;background-size:cover;background-position:center;transition:transform .2s}
+.mosaico a:hover{transform:translateY(-3px)}
+.mosaico a.g{grid-row:span 2;font-size:20px}
+.filtros{display:flex;gap:6px;flex-wrap:wrap}
+.filtros button{min-height:42px;padding:0 16px;border-radius:999px;border:1px solid var(--borda2);background:transparent;color:var(--t2);font:700 14px Inter,sans-serif;cursor:pointer}
+.filtros button.on{background:#fff;color:var(--noite);border-color:#fff}
+.artistas{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.art{border-radius:24px;overflow:hidden;background:var(--card);border:1px solid var(--borda);display:flex;flex-direction:column;transition:transform .2s,border-color .2s}
+.art:hover{transform:translateY(-3px);border-color:var(--ouro)}
+.art .foto{height:290px;font-size:48px;position:relative}
+.art .tag{position:absolute;left:12px;top:12px;font-size:11px;font-weight:900;padding:5px 10px;border-radius:999px;background:var(--noite);color:var(--ouro);letter-spacing:.06em;text-transform:uppercase}
+.art .info{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.art h3{font-size:22px;letter-spacing:-.03em}
+.art p{font-size:13px;color:var(--t3)}
+.art .acoes{display:flex;gap:8px;margin-top:auto;padding-top:10px}
+.art .acoes a{flex:1;min-height:44px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:13px}
+.agenda{display:flex;flex-direction:column;gap:10px}
+.claro{background:var(--creme);color:var(--noite)}
+.claro .selo{color:#5B2BC9}
+.equip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.eq{border-radius:22px;background:#fff;border:1px solid #E4DED0;overflow:hidden}
+.eq .foto{height:150px;font-size:13px}
+.eq .i{padding:16px 18px}
+.eq h3{font-size:20px;letter-spacing:-.02em}
+.eq p{font-size:14px;color:#4A4560;margin-top:4px}
+.passos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.passo{padding:22px;border-radius:20px;background:var(--card);border:1px solid var(--borda)}
+.passo b{width:42px;height:42px;border-radius:12px;background:var(--ouro);color:var(--noite);display:grid;place-items:center;font-size:18px;font-weight:900;margin-bottom:12px}
+.passo h3{font-size:19px;letter-spacing:-.02em}
+.passo p{font-size:14px;color:var(--t2);margin-top:6px}
+.orc{border-radius:32px;background:linear-gradient(150deg,#2A1F0A,#1F1A36 60%);border:1px solid #5A4512;padding:clamp(22px,5vw,46px);display:flex;flex-wrap:wrap;gap:34px}
+.orc .txt{flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.orc form{flex:1 1 440px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.orc label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:var(--t2)}
+.orc input,.orc select{min-height:50px;border-radius:12px;border:1px solid var(--borda2);background:var(--noite);padding:0 14px;color:#fff;font:600 16px Inter,sans-serif;width:100%}
+.orc input:focus,.orc select:focus{border-color:var(--ouro);outline:none}
+.orc .full{grid-column:1/-1}
+.ok{grid-column:1/-1;padding:14px;border-radius:12px;font-weight:700;display:none}
+.contatos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.contato{padding:22px;border-radius:20px;background:var(--card);border:1px solid var(--borda);color:#fff;display:flex;flex-direction:column;gap:4px}
+.contato:hover{border-color:var(--ouro)}
+.contato span{font-size:13px;font-weight:700;color:var(--t3)}
+.contato strong{font-size:20px;font-weight:900;word-break:break-word}
+</style>
+</head>
+<body>
+<script src="site/dados.js"></script>
+
+<header class="topo-site"><div class="wrap topo">
+  <a href="./" aria-label="Abre a Porta, início"><img src="site/logo-abreaporta.png" alt="Abre a Porta"></a>
+  <nav aria-label="Menu"><a href="#artistas">Artistas</a><a href="#agenda">Agenda</a><a href="#equipamentos" id="menuEquip">Equipamentos</a><a href="#como">Como contratar</a><a href="#contato">Contato</a></nav>
+  <a class="btn ouro" href="#orcamento">Pedir orçamento</a>
+</div></header>
+
+<main>
+<div class="hero"><div class="wrap">
+  <div class="txt">
+    <p class="selo">AGÊNCIA DE SHOWS E EVENTOS · CURITIBA</p>
+    <h1>O show certo para <span>lotar a sua festa.</span></h1>
+    <p style="font-size:18px;color:var(--t2);max-width:46ch">Artistas, produção e equipamento num lugar só. Você escolhe a atração, a gente cuida do contrato, da logística e do palco.</p>
+    <div class="acoes"><a class="btn ouro" href="#artistas">Ver os artistas</a><a class="btn linha" href="#orcamento">Pedir orçamento</a></div>
+  </div>
+  <div class="mosaico" id="mosaico"></div>
+</div></div>
+
+<section class="s" id="artistas"><div class="wrap">
+  <div class="cab"><div><p class="selo">CASTING</p><h2>Nossos artistas</h2></div><div class="filtros" id="filtros" role="group" aria-label="Filtrar por estilo"></div></div>
+  <div class="artistas" id="listaArtistas"></div>
+</div></section>
+
+<section class="s" id="agenda" style="padding-top:0"><div class="wrap">
+  <div class="cab"><div><p class="selo">AGENDA</p><h2>Próximos shows</h2></div></div>
+  <div class="agenda" id="listaShows"></div>
+</div></section>
+
+<section class="s claro" id="equipamentos"><div class="wrap">
+  <div class="cab"><div><p class="selo">ALUGUEL DE EQUIPAMENTOS</p><h2>Som, luz e palco<br>para o seu evento.</h2></div><a class="btn" style="background:var(--noite);color:#fff" href="#orcamento">Montar meu pacote</a></div>
+  <div class="equip" id="listaEquip"></div>
+</div></section>
+
+<section class="s" id="como"><div class="wrap">
+  <div class="cab"><div><p class="selo">COMO CONTRATAR</p><h2>Do pedido ao palco em 4 passos.</h2></div></div>
+  <div class="passos">
+    <div class="passo"><b>1</b><h3>Escolha a atração</h3><p>Veja vídeos, fotos e agenda de cada artista.</p></div>
+    <div class="passo"><b>2</b><h3>Peça o orçamento</h3><p>Data, cidade e tipo de evento. A gente responde rápido.</p></div>
+    <div class="passo"><b>3</b><h3>Feche o contrato</h3><p>Contrato pronto e sinal pelo PIX para garantir a data.</p></div>
+    <div class="passo"><b>4</b><h3>Curta o show</h3><p>Rider, palco e equipe combinados antes do dia.</p></div>
+  </div>
+</div></section>
+
+<section class="s" id="orcamento" style="padding-top:0"><div class="wrap"><div class="orc">
+  <div class="txt"><p class="selo">ORÇAMENTO</p><h2 style="font-size:clamp(34px,4.5vw,46px)">Qual é a sua festa?</h2><p style="color:var(--t2);font-size:17px">Conte o que você precisa e a gente responde com a proposta.</p></div>
+  <form id="formOrc" novalidate>
+    <label>Seu nome<input name="nome" autocomplete="name"></label>
+    <label>WhatsApp<input name="whats" type="tel" placeholder="(00) 00000-0000" autocomplete="tel"></label>
+    <label>Tipo de evento<select name="tipo"><option>Casa noturna</option><option>Festa particular</option><option>Formatura</option><option>Evento de empresa</option><option>Outro</option></select></label>
+    <label>Data<input name="data" type="date"></label>
+    <label>Cidade<input name="cidade"></label>
+    <label>Público esperado<select name="publico"><option>Até 300 pessoas</option><option>300 a 1.000 pessoas</option><option>Mais de 1.000 pessoas</option></select></label>
+    <label class="full">Artista que você quer<select name="artista" id="selArtista"><option>Quero que vocês me indiquem</option></select></label>
+    <label class="full">Precisa de equipamento?<select name="equip"><option>Não, só o show</option><option>Sim, som</option><option>Sim, som e luz</option><option>Sim, som, luz e palco</option></select></label>
+    <button class="btn ouro full" type="submit" style="min-height:58px;font-size:17px">Pedir orçamento</button>
+    <p class="ok" id="ok" role="status"></p>
+  </form>
+</div></div></section>
+
+<section class="s" id="contato" style="padding-top:0"><div class="wrap contatos" id="listaContatos"></div></section>
+</main>
+
+<footer class="rodape">
+  <img src="site/icone-abreaporta.png" alt="">
+  <span>© <span id="ano"></span> Abre a Porta · abreaporta.com.br</span>
+  <span>Desenvolvido por Abre a Porta · início v1.0</span>
+</footer>
+
+<script>
+(function () {
+  var S = window.SITE || { artistas: [], shows: [], equipamentos: [] };
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var iniciais = function (n) { return n.split(' ').filter(function (p) { return p.length > 2; }).map(function (p) { return p[0]; }).join('').slice(0, 2).toUpperCase(); };
+  var fundo = function (a) { return a.foto ? 'background-image:linear-gradient(0deg,rgba(14,11,26,.75),rgba(14,11,26,0) 55%),url(' + esc(a.foto) + ')' : 'background-image:radial-gradient(circle at 50% 115%,' + esc(a.cor || '#7C4DDB') + ' 0%,#1F1A36 75%)'; };
+  var wa = function (msg) { return 'https://wa.me/' + S.whatsapp + '?text=' + encodeURIComponent(msg); };
+  $('ano').textContent = new Date().getFullYear();
+
+  var arts = S.artistas.filter(function (a) { return a.publicado; });
+  var link = function (a) { return 'artista.html?a=' + encodeURIComponent(a.id); };
+
+  /* mosaico */
+  $('mosaico').innerHTML = arts.slice(0, 5).map(function (a, i) {
+    return '<a class="' + (i === 0 || arts.length === 2 ? 'g' : '') + '" href="' + link(a) + '" style="' + fundo(a) + '">' + esc(a.nome.toUpperCase()) + '</a>';
+  }).join('');
+
+  /* filtros e lista */
+  var estilos = ['Todos'];
+  arts.forEach(function (a) { if (a.estilo && estilos.indexOf(a.estilo) < 0) estilos.push(a.estilo); });
+  var filtro = 'Todos';
+  function desenhar() {
+    $('filtros').innerHTML = estilos.length > 2 ? estilos.map(function (e) { return '<button type="button" class="' + (e === filtro ? 'on' : '') + '" data-e="' + esc(e) + '">' + esc(e) + '</button>'; }).join('') : '';
+    Array.prototype.forEach.call($('filtros').querySelectorAll('button'), function (b) { b.onclick = function () { filtro = b.getAttribute('data-e'); desenhar(); }; });
+    $('listaArtistas').innerHTML = arts.filter(function (a) { return filtro === 'Todos' || a.estilo === filtro; }).map(function (a) {
+      return '<div class="art"><a class="foto" href="' + link(a) + '" style="' + fundo(a) + '" aria-label="' + esc(a.nome) + '">' + (a.foto ? '' : esc(iniciais(a.nome))) +
+        (a.estilo ? '<span class="tag">' + esc(a.estilo) + '</span>' : '') + '</a>' +
+        '<div class="info"><h3>' + esc(a.nome) + '</h3>' + (a.frase ? '<p>' + esc(a.frase) + '</p>' : (a.cidade ? '<p>' + esc(a.cidade) + '</p>' : '')) +
+        '<div class="acoes"><a class="linha" href="' + link(a) + '">Conhecer</a><a class="ouro" href="#orcamento" data-art="' + esc(a.nome) + '">Orçamento</a></div></div></div>';
+    }).join('');
+    Array.prototype.forEach.call(document.querySelectorAll('[data-art]'), function (b) { b.addEventListener('click', function () { $('selArtista').value = b.getAttribute('data-art'); }); });
+  }
+  desenhar();
+
+  /* agenda */
+  var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  var dias = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'], meses = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+  var shows = (S.shows || []).map(function (s) { var p = s.data.split('-'); return Object.assign({}, s, { d: new Date(+p[0], +p[1] - 1, +p[2]) }); })
+    .filter(function (s) { return s.d >= hoje; }).sort(function (a, b) { return a.d - b.d; }).slice(0, 6);
+  var nomeArt = function (id) { var a = S.artistas.filter(function (x) { return x.id === id; })[0]; return a ? a.nome : id; };
+  $('listaShows').innerHTML = shows.length ? shows.map(function (s) {
+    return '<div class="show"><div class="d"><span>' + dias[s.d.getDay()] + '</span><b>' + ('0' + s.d.getDate()).slice(-2) + '</b><span>' + meses[s.d.getMonth()] + '</span></div>' +
+      '<div class="q"><strong>' + esc(nomeArt(s.artista)) + '</strong><p>' + (s.fechado ? 'Evento fechado' : esc(s.local)) + (s.cidade ? ' · ' + esc(s.cidade) : '') + '</p></div>' +
+      (s.fechado ? '<span class="chip">Data reservada</span>' : (s.link ? '<a class="btn linha" style="min-height:44px" href="' + esc(s.link) + '" target="_blank" rel="noopener">Ingressos</a>' : '')) + '</div>';
+  }).join('') : '<p class="vazio">A agenda dos próximos shows aparece aqui. Quer garantir uma data? <a href="#orcamento">Peça um orçamento</a>.</p>';
+
+  /* equipamentos */
+  if (S.mostrarEquipamentos) {
+    $('listaEquip').innerHTML = S.equipamentos.map(function (e) {
+      var f = e.foto ? 'background-image:url(' + esc(e.foto) + ')' : 'background-image:linear-gradient(150deg,#1F1A36,' + esc(e.cor) + ')';
+      return '<div class="eq"><div class="foto" style="' + f + '"></div><div class="i"><h3>' + esc(e.nome) + '</h3><p>' + esc(e.texto) + '</p></div></div>';
+    }).join('');
+  } else { $('equipamentos').style.display = 'none'; $('menuEquip').style.display = 'none'; }
+
+  /* formulário */
+  arts.forEach(function (a) { var o = document.createElement('option'); o.textContent = a.nome; $('selArtista').insertBefore(o, $('selArtista').firstChild); });
+  $('selArtista').value = 'Quero que vocês me indiquem';
+  $('formOrc').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var f = ev.target, ok = $('ok');
+    ok.style.display = 'block';
+    if (!f.nome.value.trim() || !f.whats.value.trim()) {
+      ok.style.background = '#2A1F0A'; ok.style.border = '1px solid #5A4512'; ok.style.color = '#FFB066';
+      ok.textContent = 'Preencha pelo menos o seu nome e o WhatsApp.'; (f.nome.value.trim() ? f.whats : f.nome).focus(); return;
+    }
+    var dt = f.data.value ? f.data.value.split('-').reverse().join('/') : 'a combinar';
+    var msg = 'Olá! Quero um orçamento pelo site da Abre a Porta.\n\nNome: ' + f.nome.value.trim() + '\nWhatsApp: ' + f.whats.value.trim() +
+      '\nEvento: ' + f.tipo.value + '\nData: ' + dt + '\nCidade: ' + (f.cidade.value.trim() || '-') + '\nPúblico: ' + f.publico.value +
+      '\nArtista: ' + f.artista.value + '\nEquipamento: ' + f.equip.value;
+    var url = S.whatsapp ? wa(msg) : 'mailto:' + S.email + '?subject=' + encodeURIComponent('Orçamento: ' + f.tipo.value + ' em ' + dt) + '&body=' + encodeURIComponent(msg);
+    ok.style.background = '#102A22'; ok.style.border = '1px solid #1E5A44'; ok.style.color = '#3DDC97';
+    ok.textContent = S.whatsapp ? 'Pronto! Abrimos o WhatsApp com o seu pedido. É só tocar em enviar.' : 'Pronto! Abrimos o seu e-mail com o pedido. É só tocar em enviar.';
+    window.open(url, '_blank');
+  });
+
+  /* contatos */
+  var c = '';
+  if (S.whatsapp) { var w = S.whatsapp.replace(/^55/, ''); c += '<a class="contato" href="' + wa('Olá! Vim pelo site da Abre a Porta.') + '" target="_blank" rel="noopener"><span>WhatsApp</span><strong>(' + w.slice(0, 2) + ') ' + w.slice(2, w.length - 4) + '-' + w.slice(-4) + '</strong></a>'; }
+  c += '<a class="contato" href="mailto:' + esc(S.email) + '"><span>E-mail</span><strong>' + esc(S.email) + '</strong></a>';
+  c += '<a class="contato" href="https://instagram.com/' + esc(S.instagram) + '" target="_blank" rel="noopener"><span>Instagram</span><strong>@' + esc(S.instagram) + '</strong></a>';
+  $('listaContatos').innerHTML = c;
+})();
+</script>
+</body>
+</html>
