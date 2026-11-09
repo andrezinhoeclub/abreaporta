@@ -7,6 +7,6 @@
    Enquanto estiver vazio, o site usa o arquivo dados.js.
    ===================================================================== */
 var CONFIG_SUPABASE = {
-  supabaseUrl: '',
-  supabaseChave: ''
+  supabaseUrl: 'sb_publishable_MTWYEGjBWkh0_47qZoavkQ_2Ch8TN9G',
+  supabaseChave: 'sb_secret_CvnpyK_KgbC3nHISo60bHw_Ud3go34C'
 };
