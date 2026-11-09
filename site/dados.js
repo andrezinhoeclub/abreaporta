@@ -1,65 +1,70 @@
 /* =====================================================================
-   DADOS DO SITE ABRE A PORTA · v2.0
-   É só aqui que você mexe para atualizar o site (até o painel ficar pronto).
-
-   Regras rápidas:
-   - Texto sempre entre aspas: 'assim'
-   - Cada item termina com vírgula, menos o último da lista
-   - Campo que você não tiver: deixe '' ou [] (vazio) que ele some do site
+   DADOS DE RESERVA DO SITE ABRE A PORTA · v3.0
+   O site lê tudo do painel (Supabase). Este arquivo só é usado se o
+   painel ainda não estiver ligado ou estiver fora do ar.
    ===================================================================== */
 var SITE = {
-
-  // WhatsApp da agência só com números: 55 + DDD + número. Ex.: '5541999998888'
-  whatsapp: '',
+  whatsapp: '5541998440412',
   email: 'contato@abreaporta.com.br',
   instagram: 'abreaporta',
 
-  // ---------------- ARTISTAS E PERFORMERS ----------------
-  // categoria: 'Shows' (artistas, bandas, DJs) ou 'Performers' (entradas, personagens, dança)
-  // id: nome curto para o endereço → abreaporta.com.br/artista.html?a=baile-do-ted
-  // capa: foto grande deitada. retrato: foto em pé (aparece no casting)
   artistas: [
     {
-      id: 'baile-do-ted',
+      slug: 'baile-do-ted',
       nome: 'Baile do Ted',
       categoria: 'Shows',
-      estilo: 'Funk + eletrofunk',
+      estilo: 'Funk eletrônico',
       frase: 'Personagem, DJ, bazuca de CO2 e brinde pro público.',
-      cor: '#FF5A1F',
+      cor: '#E8192C',          // cor principal do artista
+      cor2: '#FFC53D',         // cor de apoio
+      fundo: '#140C0D',        // fundo da página dele
       capa: 'site/artistas/baile-do-ted/palco.jpg',
-      retrato: 'site/artistas/baile-do-ted/ted.webp',
-      logo: 'site/artistas/baile-do-ted/logo.webp',
+      retrato: 'site/artistas/baile-do-ted/ted-recorte.webp',
+      logo: 'site/artistas/baile-do-ted/logo-oficial.webp',
       publicado: true,
+      ordem: 1,
       numeros: [
         { valor: '2018', rotulo: 'na estrada desde' },
         { valor: '+7', rotulo: 'estados' }
       ],
-      destaques: ['Personagem Ted no palco', 'DJ ao vivo', 'Bazuca de CO2', 'Brinde pro público'],
+      destaques: ['Ted, o urso, no palco', 'DJ ao vivo', 'Bazuca de CO2', 'Copos exclusivos de brinde'],
       release: [
-        'O Baile do Ted nasceu em 2018, no Rio Grande do Sul, criado pelo DJ Neto. No palco, o urso Ted comanda a festa com funk e eletrofunk.',
-        'Bazuca de CO2, brinde para o público e um personagem que todo mundo quer fotografar: um show feito para ser filmado, postado e comentado no dia seguinte.'
+        'O Baile do Ted nasceu em 2018, no Rio Grande do Sul, criado pelo DJ Neto, e já passou por mais de 7 estados na cena do funk eletrônico, em eventos universitários, festivais e casas noturnas.',
+        'O repertório é feito de versões autorais de Tech Funk e Mega Funk. No palco, o DJ comanda o som e o Ted, figura central do projeto, puxa o público para a festa.',
+        'Efeitos especiais, bazuca de CO2 e copos exclusivos de brinde: um show feito para ser filmado, postado e comentado no dia seguinte.'
       ],
-      eventos: [],                 // tipos de evento: ['Casas noturnas', 'Formaturas']
-      videos: [],                  // links do YouTube: ['https://www.youtube.com/watch?v=XXXX']
-      fotos: ['site/artistas/baile-do-ted/palco.jpg', 'site/artistas/baile-do-ted/dj-neto.jpg', 'site/artistas/baile-do-ted/ted.webp'],
-      presskit: [],                // [{ nome: 'Rider técnico', tipo: 'PDF', arquivo: 'site/artistas/baile-do-ted/rider.pdf' }]
+      eventos: ['Casas noturnas', 'Festivais', 'Eventos universitários'],
+      videos: [],
+      fotos: [
+        'site/artistas/baile-do-ted/palco.jpg',
+        'site/artistas/baile-do-ted/dj-neto.jpg',
+        'site/artistas/baile-do-ted/ted-card.jpg',
+        'site/artistas/baile-do-ted/contrate.jpg'
+      ],
+      presskit: [
+        { nome: 'Press kit completo', tipo: 'PDF', arquivo: 'site/artistas/baile-do-ted/presskit-baile-do-ted.pdf' }
+      ],
       redes: { site: 'https://bailedoted.com.br', instagram: 'bailedoted', tiktok: 'bailedoted0', youtube: 'https://www.youtube.com/channel/UCTWVhvbqsDj7csEh-owrOVA' }
     },
     {
-      id: 'vovos-do-hype',
+      slug: 'vovos-do-hype',
       nome: 'Vovôs do Hype',
       categoria: 'Performers',
       estilo: 'Dança, humor e interação',
       frase: 'Sua festa merece uma entrada que ninguém esquece.',
-      cor: '#7C4DDB',
+      cor: '#D7262F',
+      cor2: '#C9CDD4',
+      fundo: '#080808',
       capa: 'https://vovosdohype.com.br/images/vovos-principal.webp',
       retrato: 'https://vovosdohype.com.br/images/vovos-principal.webp',
       logo: 'https://vovosdohype.com.br/images/logo-vovos-white.webp',
       publicado: true,
+      ordem: 2,
       numeros: [],
-      destaques: ['Entrada surpresa', 'Interação na pista', 'Conteúdo memorável'],
+      destaques: ['Entrada surpresa', 'Interação na pista', 'O momento que vira assunto'],
       release: [
-        'Dança, atitude, humor e interação para transformar festas, casamentos, formaturas e eventos em momentos inesquecíveis.'
+        'Não é só dança. É o auge da festa.',
+        'Dança, atitude, humor e interação para transformar festas, casamentos, formaturas e eventos em momentos inesquecíveis. O hype não tem idade.'
       ],
       eventos: ['15 anos', 'Casamentos', 'Formaturas', 'Corporativos', 'Aniversários e festas', 'Campanhas e marcas'],
       videos: [],
@@ -69,22 +74,16 @@ var SITE = {
         'https://vovosdohype.com.br/images/carrossel-vovos/03.webp',
         'https://vovosdohype.com.br/images/carrossel-vovos/04.webp',
         'https://vovosdohype.com.br/images/carrossel-vovos/05.webp',
-        'https://vovosdohype.com.br/images/carrossel-vovos/06.webp'
+        'https://vovosdohype.com.br/images/carrossel-vovos/06.webp',
+        'https://vovosdohype.com.br/images/carrossel-vovos/07.webp'
       ],
       presskit: [],
       redes: { site: 'https://vovosdohype.com.br', instagram: 'vovosdohype', tiktok: 'vovosdohype', youtube: '' }
     }
-    // Para incluir outro artista: copie um bloco { ... } inteiro, cole aqui embaixo,
-    // coloque uma vírgula depois do } de cima e troque os dados.
   ],
 
-  // ---------------- AGENDA ----------------
-  // data: 'AAAA-MM-DD'. artista: o id. link: ingressos ('' = sem botão). fechado: true = "Data reservada"
-  shows: [
-    // { data: '2026-11-21', artista: 'baile-do-ted', local: 'Nome da casa', cidade: 'Curitiba · PR', link: '', fechado: false }
-  ],
+  shows: [],
 
-  // ---------------- EQUIPAMENTOS ----------------
   mostrarEquipamentos: true,
   equipamentos: [
     { nome: 'Som', texto: 'Sonorização para shows e eventos' },
@@ -92,8 +91,5 @@ var SITE = {
     { nome: 'Palco e estrutura', texto: 'Estrutura para o show acontecer' },
     { nome: 'Pacote completo', texto: 'Show + equipamento num orçamento só' }
   ],
-
-  // ---------------- CLIENTES (logos) ----------------
-  // { nome: 'Nome da casa', logo: 'site/clientes/arquivo.png' }  — vazio esconde a faixa
   clientes: []
 };
