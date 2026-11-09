@@ -8,5 +8,5 @@
    ===================================================================== */
 var CONFIG_SUPABASE = {
   supabaseUrl: 'sb_publishable_MTWYEGjBWkh0_47qZoavkQ_2Ch8TN9G',
-  supabaseChave: 'sb_secret_CvnpyK_KgbC3nHISo60bHw_Ud3go34C'
+  supabaseChave: 'https://kpebpymzmsfzqsmwlnyl.supabase.co/rest/v1/'
 };
