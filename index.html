@@ -3,328 +3,282 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abre a Porta · Agência de shows, performers e eventos</title>
-<meta name="description" content="Agência de shows e eventos. Artistas, performers, produção e aluguel de equipamentos para a sua festa.">
-<meta name="theme-color" content="#0B0914">
+<title>Abre a Porta · Agência de shows e performers</title>
+<meta name="description" content="Agência de shows e performers: Baile do Ted, Vovôs do Hype e mais atrações para casas noturnas, festivais, casamentos, formaturas e eventos.">
+<meta name="theme-color" content="#0A0808">
 <link rel="icon" type="image/png" href="site/icone-abreaporta.png">
-<meta property="og:title" content="Abre a Porta · Agência de shows e eventos">
+<meta property="og:title" content="Abre a Porta · Agência de shows e performers">
 <meta property="og:description" content="Abra as portas da sua festa.">
 <meta property="og:image" content="https://abreaporta.com.br/site/artistas/baile-do-ted/palco.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Figtree:wght@400;500;700;800&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site/estilo.css">
 <style>
-/* HERO */
-.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;background:#000 center/cover no-repeat;overflow:hidden}
-.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,9,20,.55) 0%,rgba(11,9,20,.1) 35%,rgba(11,9,20,.75) 75%,#0B0914 100%)}
-.hero:after{content:"";position:absolute;right:-15%;top:-20%;width:70vw;height:70vw;background:radial-gradient(closest-side,rgba(255,194,51,.25),transparent);mix-blend-mode:screen;pointer-events:none}
-.hero .wrap{position:relative;z-index:1;width:100%;padding-top:120px;padding-bottom:clamp(36px,6vw,70px);display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end}
-.hero h1{font-size:clamp(54px,9vw,150px);line-height:.86;letter-spacing:-.06em;text-transform:uppercase}
-.hero h1 .o{color:var(--ouro)}
-.hero .lado{display:flex;flex-direction:column;gap:16px;max-width:340px}
-.hero .lado p{font-size:17px;color:var(--t2)}
-.hero .acoes{display:flex;gap:10px;flex-wrap:wrap}
-.hero .rolar{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);font-size:11px;font-weight:800;letter-spacing:.2em;color:var(--t3);z-index:1}
-@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}.hero .rolar{display:none}}
+/* PALCOS: cada artista ocupa a tela */
+.palcos{display:flex;min-height:100svh;background:#000}
+.palco{position:relative;flex:1 1 0;min-width:0;display:flex;align-items:flex-end;overflow:hidden;background:var(--fundo) center/cover no-repeat;transition:flex-grow .6s cubic-bezier(.2,.7,.2,1)}
+.palco:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 30%,color-mix(in srgb,var(--fundo) 70%,transparent) 68%,var(--fundo) 100%)}
+.palco:after{content:"";position:absolute;inset:auto 0 0 0;height:6px;background:var(--cor)}
+.palco + .palco{border-left:1px solid rgba(255,255,255,.12)}
+.palco:hover{flex-grow:1.55}
+.palco .dentro{position:relative;z-index:1;width:100%;padding:110px clamp(18px,3vw,40px) clamp(30px,5vw,56px);display:flex;flex-direction:column;gap:14px}
+.palco .logo{width:clamp(80px,9vw,130px);height:auto;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5))}
+.palco h2{font-size:clamp(64px,8.5vw,150px);line-height:.84;color:#fff;text-shadow:0 6px 40px rgba(0,0,0,.5)}
+.palco .cat{display:flex;gap:8px;flex-wrap:wrap}
+.palco .cat span{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:var(--cor);color:#fff}
+.palco .cat span + span{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25)}
+.palco .frase{font-size:clamp(16px,1.5vw,19px);font-weight:600;max-width:34ch;color:#fff}
+.palco .acoes{display:flex;gap:10px;flex-wrap:wrap}
+.selo-topo{position:absolute;left:50%;top:84px;transform:translateX(-50%);z-index:3;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.2);padding:8px 14px;border-radius:999px;backdrop-filter:blur(6px);white-space:nowrap}
+.heroWrap{position:relative}
+@media (max-width:860px){.palcos{flex-direction:column}.palco{min-height:78svh}.palco + .palco{border-left:0;border-top:1px solid rgba(255,255,255,.12)}.palco:hover{flex-grow:1}.selo-topo{top:80px}}
 
-/* CASTING (lista grande) */
-.cab{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,48px)}
-.abas{display:flex;gap:6px;padding:6px;border-radius:999px;background:var(--card);border:1px solid var(--borda)}
-.abas button{min-height:44px;padding:0 18px;border-radius:999px;border:0;background:transparent;color:var(--t2);font:800 14px Inter,sans-serif;cursor:pointer}
-.abas button.on{background:#fff;color:var(--noite)}
-.lista{border-top:1px solid var(--borda)}
-.linha-art{position:relative;display:grid;grid-template-columns:70px 1fr auto 60px;align-items:center;gap:24px;padding:clamp(18px,2.4vw,30px) 0;border-bottom:1px solid var(--borda);transition:padding .3s}
-.linha-art .n{font-weight:800;font-size:14px;color:var(--t4);letter-spacing:.1em}
-.linha-art h3{font-size:clamp(40px,7.5vw,118px);letter-spacing:-.06em;line-height:.9;text-transform:uppercase;transition:color .25s,transform .35s}
-.linha-art .info{text-align:right;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
-.linha-art .info b{font-size:15px}
-.linha-art .info span{font-size:13px;color:var(--t3)}
-.linha-art .ir{width:60px;height:60px;border-radius:50%;border:1.5px solid var(--borda2);display:grid;place-items:center;font-size:22px;transition:all .25s}
-.linha-art .mini{display:none}
-.linha-art:hover h3{color:var(--ouro);transform:translateX(14px)}
-.linha-art:hover .ir{background:var(--ouro);color:var(--noite);border-color:var(--ouro);transform:rotate(-45deg)}
-.flutua{position:fixed;left:0;top:0;width:280px;height:360px;border-radius:24px;pointer-events:none;z-index:40;opacity:0;transform:translate(-50%,-50%) scale(.85) rotate(-4deg);transition:opacity .2s,transform .25s;background:var(--card2) center/cover no-repeat;box-shadow:0 30px 80px rgba(0,0,0,.6)}
-.flutua.on{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-4deg)}
-@media (max-width:760px){
-  .linha-art{grid-template-columns:1fr 84px;gap:14px}
-  .linha-art .n,.linha-art .ir{display:none}
-  .linha-art .info{grid-column:1;grid-row:2;text-align:left;align-items:flex-start}
-  .linha-art .mini{display:block;grid-column:2;grid-row:1/3;width:84px;height:104px;border-radius:16px;background:var(--card2) center/cover no-repeat}
-  .flutua{display:none}
-}
+/* HOLOFOTE: seção de cada artista nas cores dele */
+.holofote{position:relative;background:var(--fundo);overflow:hidden;padding:clamp(80px,11vw,150px) 0}
+.holofote:before{content:"";position:absolute;width:1100px;height:1100px;right:-300px;top:50%;transform:translateY(-50%);background:radial-gradient(closest-side,color-mix(in srgb,var(--cor) 45%,transparent),transparent);opacity:.55;pointer-events:none}
+.holofote.inverte:before{right:auto;left:-300px}
+.holofote .wrap{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,5vw,70px);align-items:center}
+.holofote.inverte .wrap{grid-template-columns:.9fr 1.1fr}
+.holofote.inverte .txt{order:2}
+.holofote .txt{display:flex;flex-direction:column;gap:22px}
+.holofote h2{font-size:clamp(72px,11vw,180px);line-height:.82;color:#fff}
+.holofote h2 em{font-style:normal;color:var(--cor)}
+.holofote .frase{font-size:clamp(18px,1.8vw,24px);font-weight:700;color:var(--t2);max-width:30ch}
+.lista-dest{list-style:none;margin:0;padding:0;border-top:1px solid var(--linha)}
+.lista-dest li{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--linha);font-family:var(--f-cartaz);font-weight:800;font-size:clamp(24px,2.4vw,34px);text-transform:uppercase;line-height:1}
+.lista-dest li b{font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--cor2);width:30px}
+.nums{display:flex;gap:clamp(20px,4vw,50px);flex-wrap:wrap}
+.nums div b{display:block;font-family:var(--f-cartaz);font-size:clamp(56px,6vw,96px);font-weight:900;line-height:.9;color:var(--cor2)}
+.nums div span{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3)}
+.holofote .acoes{display:flex;gap:10px;flex-wrap:wrap}
+.holofote .img{position:relative;min-height:560px;display:flex;align-items:flex-end;justify-content:center}
+.holofote .img .disco{position:absolute;width:88%;aspect-ratio:1;border-radius:50%;left:6%;bottom:6%;background:var(--cor);box-shadow:0 0 120px color-mix(in srgb,var(--cor) 60%,transparent)}
+.holofote .img .recorte{position:relative;width:96%;height:auto;filter:drop-shadow(0 30px 50px rgba(0,0,0,.55))}
+.holofote .img .foto{position:relative;width:100%;aspect-ratio:4/5;border-radius:30px;background:var(--fundo) center/cover no-repeat;box-shadow:0 30px 80px rgba(0,0,0,.6);border:1px solid var(--linha)}
+.holofote .img .mini{position:absolute;width:42%;aspect-ratio:1;border-radius:22px;left:-6%;bottom:-4%;background:center/cover no-repeat;border:6px solid var(--fundo);box-shadow:0 20px 50px rgba(0,0,0,.6);transform:rotate(-5deg)}
+.holofote .tipos{display:flex;flex-wrap:wrap;gap:8px}
+@media (max-width:900px){.holofote .wrap,.holofote.inverte .wrap{grid-template-columns:1fr}.holofote.inverte .txt{order:0}.holofote .img{min-height:0}}
 
-/* BENTO */
-.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(220px,auto);gap:14px}
-.tile{position:relative;border-radius:28px;padding:26px;background:var(--card);border:1px solid var(--borda);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:10px}
-.tile h3{font-size:clamp(26px,2.6vw,38px);letter-spacing:-.045em}
-.tile p{font-size:15px;color:var(--t2);max-width:40ch}
-.tile .tag{margin-bottom:auto;padding-bottom:18px;font-size:11px;font-weight:900;letter-spacing:.16em;color:var(--ouro)}
-.tile.foto{background:#000 center/cover no-repeat}
-.tile.foto:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,9,20,.92) 8%,rgba(11,9,20,.1) 70%)}
-.tile.foto > *{position:relative}
-.t-a{grid-column:span 2;grid-row:span 2}
-.t-b{grid-column:span 2}
-.t-c{grid-column:span 1}
-.t-d{grid-column:span 1;background:var(--ouro);color:var(--noite);border-color:var(--ouro)}
-.t-d p{color:#3A2A00}.t-d .tag{color:var(--noite)}
-.t-e{grid-column:span 4;min-height:180px}
-.equips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-@media (max-width:900px){.bento{grid-template-columns:repeat(2,1fr)}.t-a{grid-column:span 2;grid-row:span 1;min-height:380px}.t-b,.t-e{grid-column:span 2}}
-@media (max-width:560px){.bento{grid-template-columns:1fr}.t-a,.t-b,.t-c,.t-d,.t-e{grid-column:span 1}}
+/* SERVIÇOS */
+.servicos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--linha)}
+.serv{padding:30px 26px 34px 0;border-right:1px solid var(--linha)}
+.serv + .serv{padding-left:26px}
+.serv:last-child{border-right:0}
+.serv b{font-family:var(--f-mono);font-size:12px;color:var(--vermelho)}
+.serv h3{font-size:clamp(30px,2.7vw,46px);overflow-wrap:break-word;margin:14px 0 10px}
+.serv p{color:var(--t3);font-size:15px}
+.equips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+@media (max-width:900px){.servicos{grid-template-columns:1fr 1fr}.serv{border-right:0;border-bottom:1px solid var(--linha);padding-left:0!important}}
+@media (max-width:540px){.servicos{grid-template-columns:1fr}}
 
-/* TIPOS DE EVENTO */
-.tipos{display:flex;flex-wrap:wrap;gap:6px 26px;font-weight:900;font-size:clamp(34px,5.6vw,84px);letter-spacing:-.05em;line-height:1.02;text-transform:uppercase}
-.tipos span:nth-child(odd){color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.55)}
-.tipos span:nth-child(3n){color:var(--ouro);-webkit-text-stroke:0}
-
-/* PASSOS */
-.passos{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--borda)}
-.passo{padding:28px 24px 10px 0;border-right:1px solid var(--borda)}
-.passo + .passo{padding-left:24px}
-.passo:last-child{border-right:0}
-.passo b{display:block;font-size:72px;font-weight:900;letter-spacing:-.06em;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--ouro)}
-.passo h3{font-size:24px;letter-spacing:-.03em;margin-top:18px}
-.passo p{font-size:15px;color:var(--t3);margin-top:8px}
-@media (max-width:900px){.passos{grid-template-columns:1fr 1fr}.passo{border-right:0;border-bottom:1px solid var(--borda);padding-left:0!important}}
-@media (max-width:520px){.passos{grid-template-columns:1fr}}
-
-/* CLIENTES */
-.clientes{display:flex;flex-wrap:wrap;gap:30px 50px;align-items:center;justify-content:center;opacity:.8}
-.clientes img{height:46px;width:auto;filter:grayscale(1) brightness(2)}
+/* COMO */
+.passos{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.passo{border-radius:24px;padding:26px;background:var(--card);border:1px solid var(--linha)}
+.passo b{font-family:var(--f-cartaz);font-size:84px;line-height:.85;color:transparent;-webkit-text-stroke:2px var(--vermelho)}
+.passo h3{font-size:34px;margin-top:16px}
+.passo p{color:var(--t3);font-size:15px;margin-top:8px}
+@media (max-width:900px){.passos{grid-template-columns:1fr 1fr}}
+@media (max-width:540px){.passos{grid-template-columns:1fr}}
 
 /* ORÇAMENTO */
 .orc{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(30px,5vw,70px)}
 .orc .txt{display:flex;flex-direction:column;gap:18px}
 .orc .txt p{font-size:18px;color:var(--t2)}
 .orc form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.orc label{display:flex;flex-direction:column;gap:8px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
-.orc input,.orc select{min-height:56px;border-radius:16px;border:1px solid var(--borda2);background:var(--card);padding:0 16px;color:#fff;font:600 16px Inter,sans-serif;width:100%;letter-spacing:0;text-transform:none}
-.orc input:focus,.orc select:focus{border-color:var(--ouro);outline:none}
+.orc label{display:flex;flex-direction:column;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+.orc input,.orc select{min-height:56px;border-radius:16px;border:1px solid var(--linha2);background:var(--preto2);padding:0 16px;color:var(--creme);font:600 16px var(--f-texto);width:100%;letter-spacing:0;text-transform:none}
+.orc input:focus,.orc select:focus{border-color:var(--vermelho);outline:none}
 .orc .full{grid-column:1/-1}
-.ok{grid-column:1/-1;padding:14px 16px;border-radius:14px;font-weight:700;display:none}
+.ok{grid-column:1/-1;padding:14px 16px;border-radius:14px;font-weight:700;display:none;font-family:var(--f-texto);letter-spacing:0;text-transform:none}
 @media (max-width:860px){.orc{grid-template-columns:1fr}}
 @media (max-width:520px){.orc form{grid-template-columns:1fr}}
 
 /* FINAL */
-.final{text-align:center;padding:clamp(80px,12vw,160px) 0;position:relative;overflow:hidden}
-.final:before{content:"";position:absolute;left:50%;top:60%;width:900px;height:900px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(255,194,51,.22),rgba(124,77,219,.12) 55%,transparent);pointer-events:none}
-.final h2{position:relative;font-size:var(--gigante);text-transform:uppercase;letter-spacing:-.065em;line-height:.84}
-.final h2 span{color:var(--ouro)}
-.contatos{position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:40px}
+.final{position:relative;overflow:hidden;text-align:center;padding:clamp(90px,12vw,170px) 0;background:var(--vermelho);color:#fff}
+.final h2{font-size:clamp(80px,15vw,250px);line-height:.8}
+.final p{font-size:19px;font-weight:700;margin:22px auto 0;max-width:40ch}
+.final .contatos{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:36px}
+.final .btn.preto{background:#0A0808;color:#fff}
+.final .btn.vazado{border:2px solid #fff;color:#fff}
 </style>
 </head>
 <body>
+<script src="site/config.js"></script>
 <script src="site/dados.js"></script>
+<script src="site/carregar.js"></script>
 
 <header class="topo-site" id="topo"><div class="wrap topo">
   <a href="./" aria-label="Abre a Porta, início"><img src="site/logo-abreaporta.png" alt="Abre a Porta"></a>
-  <nav aria-label="Menu"><a href="#casting">Casting</a><a href="#servicos">O que fazemos</a><a href="#agenda">Agenda</a><a href="#como">Como contratar</a><a href="#contato">Contato</a></nav>
-  <a class="btn ouro" href="#orcamento">Contratar</a>
+  <nav aria-label="Menu"><a href="#casting">Casting</a><a href="#servicos">Serviços</a><a href="#agenda">Agenda</a><a href="#como">Como contratar</a><a href="#contato">Contato</a></nav>
+  <a class="btn fogo" href="#orcamento">Contratar</a>
 </div></header>
 
 <main>
-  <section class="hero" id="hero">
-    <div class="wrap">
-      <h1>Abra as portas<br>da sua <span class="o">festa.</span></h1>
-      <div class="lado">
-        <span class="chip">Agência de shows, performers e eventos</span>
-        <p>Artistas que lotam a pista, performers que viram assunto e o equipamento para o show acontecer. Você escolhe, a gente produz.</p>
-        <div class="acoes"><a class="btn ouro seta" href="#casting">Ver o casting</a><a class="btn linha" href="#orcamento">Pedir orçamento</a></div>
-      </div>
-    </div>
-    <span class="rolar">ROLE PARA BAIXO</span>
-  </section>
-
+  <div class="heroWrap">
+    <span class="selo-topo">Agência de shows e performers</span>
+    <section class="palcos" id="palcos" aria-label="Atrações"></section>
+  </div>
   <div class="faixa" aria-hidden="true"><div class="trilho" id="faixa"></div></div>
 
-  <section class="s" id="casting"><div class="wrap">
-    <div class="cab surge">
-      <div><p class="selo">Casting</p><h2 class="titulo" style="margin-top:14px">Quem faz<br>a festa.</h2></div>
-      <div class="abas" role="group" aria-label="Filtrar casting" id="abas"></div>
-    </div>
-    <div class="lista" id="lista"></div>
-  </div></section>
-  <div class="flutua" id="flutua" aria-hidden="true"></div>
+  <div id="casting"></div>
 
-  <section class="s" id="servicos" style="padding-top:0"><div class="wrap">
-    <div class="cab surge"><div><p class="selo">O que fazemos</p><h2 class="titulo" style="margin-top:14px">Do palco<br>à pista.</h2></div></div>
-    <div class="bento">
-      <a class="tile foto t-a surge" id="tileShows" href="#casting"><span class="tag">SHOWS E ARTISTAS</span><h3>Atrações que lotam a pista.</h3><p>Agenciamos artistas e cuidamos do contrato, da logística e do palco.</p></a>
-      <a class="tile foto t-b surge" id="tilePerf" href="#casting"><span class="tag">PERFORMERS</span><h3>Entradas que ninguém esquece.</h3><p>Personagens, dança e interação para casamentos, 15 anos, formaturas e empresas.</p></a>
-      <div class="tile t-c surge" id="tileEquip"><span class="tag">EQUIPAMENTOS</span><h3>Som, luz e palco.</h3><div class="equips" id="equips"></div></div>
-      <a class="tile t-d surge" href="#orcamento"><span class="tag">SEU EVENTO</span><h3>Pacote completo.</h3><p>Show + equipamento num orçamento só. →</p></a>
-      <div class="tile t-e surge"><span class="tag">SEM DOR DE CABEÇA</span><h3>Contrato, sinal no PIX e rider combinados antes do dia.</h3><p>Você recebe tudo por escrito e só se preocupa com a festa.</p></div>
+  <section class="s" id="servicos"><div class="wrap">
+    <p class="selo surge">O que a Abre a Porta faz</p>
+    <h2 class="titulo surge" style="margin:16px 0 clamp(30px,4vw,50px)">Do palco<br>à pista.</h2>
+    <div class="servicos surge">
+      <div class="serv"><b>01</b><h3>Shows</h3><p>Artistas e DJs com contrato, logística e rider resolvidos.</p></div>
+      <div class="serv"><b>02</b><h3>Performers</h3><p>Entradas e personagens para casamentos, 15 anos, formaturas e empresas.</p></div>
+      <div class="serv" id="servEquip"><b>03</b><h3>Equipamentos</h3><p>Som, luz e estrutura para o show acontecer.</p><div class="equips" id="equips"></div></div>
+      <div class="serv"><b>04</b><h3>Produção</h3><p>Do primeiro contato até a pista: você só se preocupa com a festa.</p></div>
     </div>
-  </div></section>
-
-  <section class="s" style="padding-top:0" id="tiposSec"><div class="wrap">
-    <p class="selo surge" style="margin-bottom:26px">Pra qual festa?</p>
-    <div class="tipos surge" id="tipos"></div>
   </div></section>
 
   <section class="s" id="agenda" style="padding-top:0"><div class="wrap">
-    <div class="cab surge"><div><p class="selo">Agenda</p><h2 class="titulo" style="margin-top:14px">Próximos shows.</h2></div></div>
+    <p class="selo surge">Agenda</p>
+    <h2 class="titulo surge" style="margin:16px 0 clamp(26px,4vw,44px)">Próximos shows.</h2>
     <div id="shows"></div>
   </div></section>
 
   <section class="s" id="como" style="padding-top:0"><div class="wrap">
-    <div class="cab surge"><div><p class="selo">Como contratar</p><h2 class="titulo" style="margin-top:14px">Do pedido<br>ao palco.</h2></div></div>
-    <div class="passos surge">
-      <div class="passo"><b>01</b><h3>Escolha</h3><p>Veja vídeos, fotos e agenda de cada atração.</p></div>
-      <div class="passo"><b>02</b><h3>Peça o orçamento</h3><p>Data, cidade e tipo de evento. A gente responde rápido.</p></div>
-      <div class="passo"><b>03</b><h3>Feche</h3><p>Contrato pronto e sinal pelo PIX para garantir a data.</p></div>
-      <div class="passo"><b>04</b><h3>Curta</h3><p>Rider, palco e equipe combinados antes do dia.</p></div>
+    <p class="selo surge">Como contratar</p>
+    <h2 class="titulo surge" style="margin:16px 0 clamp(26px,4vw,44px)">Do pedido ao palco.</h2>
+    <div class="passos">
+      <div class="passo surge"><b>01</b><h3>Escolha</h3><p>Veja fotos, vídeos e o show de cada atração.</p></div>
+      <div class="passo surge"><b>02</b><h3>Peça</h3><p>Data, cidade e tipo de evento. A gente responde rápido.</p></div>
+      <div class="passo surge"><b>03</b><h3>Feche</h3><p>Contrato pronto e sinal pelo PIX para garantir a data.</p></div>
+      <div class="passo surge"><b>04</b><h3>Curta</h3><p>Rider, palco e equipe combinados antes do dia.</p></div>
     </div>
   </div></section>
 
-  <section class="s" id="clientesSec" style="padding-top:0;display:none"><div class="wrap">
-    <p class="selo" style="margin-bottom:30px">Quem já abriu a porta com a gente</p>
-    <div class="clientes" id="clientes"></div>
-  </div></section>
-
   <section class="s" id="orcamento" style="padding-top:0"><div class="wrap orc">
-    <div class="txt surge"><p class="selo">Orçamento</p><h2 class="titulo">Qual é a sua festa?</h2><p>Conte o que você precisa. Com data, cidade e atração a gente já volta com a proposta.</p></div>
+    <div class="txt surge"><p class="selo">Orçamento</p><h2 class="titulo">Qual é a sua festa?</h2><p>Conte o que você precisa. Com data, cidade e atração a gente volta com a proposta.</p></div>
     <form id="formOrc" class="surge" novalidate>
-      <label>Seu nome<input name="nome" autocomplete="name"></label>
-      <label>WhatsApp<input name="whats" type="tel" placeholder="(00) 00000-0000" autocomplete="tel"></label>
-      <label>Tipo de evento<select name="tipo"><option>Casa noturna</option><option>Casamento</option><option>15 anos</option><option>Formatura</option><option>Evento de empresa</option><option>Aniversário e festa</option><option>Outro</option></select></label>
+      <label>Seu nome<input name="nome" autocomplete="name" maxlength="120"></label>
+      <label>WhatsApp<input name="whats" type="tel" placeholder="(00) 00000-0000" autocomplete="tel" maxlength="30"></label>
+      <label>Tipo de evento<select name="tipo"><option>Casa noturna</option><option>Festival</option><option>Evento universitário</option><option>Casamento</option><option>15 anos</option><option>Formatura</option><option>Evento de empresa</option><option>Aniversário e festa</option><option>Outro</option></select></label>
       <label>Data<input name="data" type="date"></label>
-      <label>Cidade<input name="cidade"></label>
+      <label>Cidade<input name="cidade" maxlength="80"></label>
       <label>Público esperado<select name="publico"><option>Até 150 pessoas</option><option>150 a 500 pessoas</option><option>500 a 1.500 pessoas</option><option>Mais de 1.500 pessoas</option></select></label>
       <label class="full">Atração<select name="artista" id="selArtista"><option>Quero que vocês me indiquem</option></select></label>
       <label>Precisa de equipamento?<select name="equip"><option>Não, só a atração</option><option>Sim, som</option><option>Sim, som e luz</option><option>Sim, som, luz e palco</option></select></label>
       <label>Investimento previsto<select name="verba"><option>Prefiro conversar</option><option>Até R$ 3 mil</option><option>R$ 3 a 10 mil</option><option>R$ 10 a 30 mil</option><option>Acima de R$ 30 mil</option></select></label>
-      <button class="btn ouro full seta" type="submit" style="min-height:62px;font-size:17px">Pedir orçamento</button>
+      <button class="btn fogo full seta" type="submit" style="min-height:62px;font-size:17px">Pedir orçamento</button>
       <p class="ok" id="ok" role="status"></p>
     </form>
   </div></section>
 
   <section class="final" id="contato"><div class="wrap">
-    <h2 class="surge">Bora abrir<br>essa <span>porta?</span></h2>
+    <h2 class="surge">Bora abrir<br>essa porta?</h2>
+    <p>Chama no WhatsApp e garante a data da sua festa.</p>
     <div class="contatos" id="contatos"></div>
   </div></section>
 </main>
 
 <footer class="rodape">
   <span style="display:flex;align-items:center;gap:10px"><img src="site/icone-abreaporta.png" alt="">© <span id="ano"></span> Abre a Porta · abreaporta.com.br</span>
-  <span>Desenvolvido por Abre a Porta · início v2.0</span>
+  <span>Desenvolvido por Abre a Porta · início v3.0</span>
 </footer>
 
 <script>
 (function () {
-  var S = window.SITE || { artistas: [], shows: [], equipamentos: [], clientes: [] };
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
-  var bg = function (url, cor) { return 'background-image:' + (url ? 'url(' + esc(url) + '),' : '') + 'radial-gradient(circle at 50% 110%,' + esc(cor || '#7C4DDB') + ' 0%,#1F1A36 75%)'; };
-  var wa = function (msg) { return 'https://wa.me/' + S.whatsapp + '?text=' + encodeURIComponent(msg); };
+  var cssUrl = function (u) { return u ? "url('" + String(u).replace(/['"\\()\s]/g, encodeURIComponent) + "')" : 'none'; };
+  var temas = function (a) { return '--cor:' + esc(a.cor || '#E8192C') + ';--cor2:' + esc(a.cor2 || '#FFC53D') + ';--fundo:' + esc(a.fundo || '#0A0808'); };
   $('ano').textContent = new Date().getFullYear();
-
-  /* topo fica sólido ao rolar */
-  var topo = $('topo');
-  var t = function () { topo.classList.toggle('solido', window.scrollY > 40); };
+  var topo = $('topo'), t = function () { topo.classList.toggle('solido', window.scrollY > 40); };
   window.addEventListener('scroll', t, { passive: true }); t();
 
-  var arts = S.artistas.filter(function (a) { return a.publicado; });
-  var link = function (a) { return 'artista.html?a=' + encodeURIComponent(a.id); };
+  window.carregarSite().then(function (S) {
+    var wa = function (msg) { return 'https://wa.me/' + S.whatsapp + '?text=' + encodeURIComponent(msg); };
+    var arts = (S.artistas || []).filter(function (a) { return a.publicado; });
+    var link = function (a) { return 'artista.html?a=' + encodeURIComponent(a.slug); };
 
-  /* hero */
-  var capa = arts.filter(function (a) { return a.capa; })[0];
-  if (capa) $('hero').style.backgroundImage = 'url(' + capa.capa + ')';
-
-  /* faixa */
-  var itens = arts.map(function (a) { return a.nome; }).concat(['Shows', 'Performers', 'Equipamentos', 'Eventos']);
-  var faixa = '<span>' + itens.map(esc).join('</span><span>') + '</span>';
-  $('faixa').innerHTML = faixa + faixa + faixa + faixa;
-
-  /* casting */
-  var cats = ['Todos'];
-  arts.forEach(function (a) { if (a.categoria && cats.indexOf(a.categoria) < 0) cats.push(a.categoria); });
-  var cat = 'Todos';
-  var flut = $('flutua');
-  function lista() {
-    $('abas').innerHTML = cats.length > 2 ? cats.map(function (c) { return '<button type="button" class="' + (c === cat ? 'on' : '') + '" data-c="' + esc(c) + '">' + esc(c) + '</button>'; }).join('') : '';
-    $('abas').style.display = cats.length > 2 ? '' : 'none';
-    Array.prototype.forEach.call($('abas').querySelectorAll('button'), function (b) { b.onclick = function () { cat = b.getAttribute('data-c'); lista(); }; });
-    var vis = arts.filter(function (a) { return cat === 'Todos' || a.categoria === cat; });
-    $('lista').innerHTML = vis.map(function (a, i) {
-      return '<a class="linha-art" href="' + link(a) + '" data-foto="' + esc(a.retrato || a.capa || '') + '">' +
-        '<span class="n">' + ('0' + (i + 1)).slice(-2) + '</span><h3>' + esc(a.nome) + '</h3>' +
-        '<span class="info"><b>' + esc(a.categoria || '') + '</b><span>' + esc(a.estilo || '') + '</span></span>' +
-        '<span class="ir" aria-hidden="true">→</span><span class="mini" style="' + bg(a.retrato || a.capa, a.cor) + '"></span></a>';
+    /* palcos */
+    $('palcos').innerHTML = arts.map(function (a) {
+      return '<a class="palco" href="' + link(a) + '" style="' + temas(a) + ';background-image:' + cssUrl(a.capa) + '">' +
+        '<div class="dentro">' + (a.logo ? '<img class="logo" src="' + esc(a.logo) + '" alt="" onerror="this.remove()">' : '') +
+        '<div class="cat"><span>' + esc(a.categoria || '') + '</span>' + (a.estilo ? '<span>' + esc(a.estilo) + '</span>' : '') + '</div>' +
+        '<h2>' + esc(a.nome) + '</h2>' + (a.frase ? '<p class="frase">' + esc(a.frase) + '</p>' : '') +
+        '<div class="acoes"><span class="btn fogo seta">Conhecer o show</span></div></div></a>';
     }).join('');
-    Array.prototype.forEach.call($('lista').querySelectorAll('.linha-art'), function (l) {
-      l.addEventListener('mouseenter', function () { var f = l.getAttribute('data-foto'); if (f) { flut.style.backgroundImage = 'url(' + f + ')'; flut.classList.add('on'); } });
-      l.addEventListener('mouseleave', function () { flut.classList.remove('on'); });
+
+    /* faixa */
+    var itens = arts.map(function (a) { return a.nome; }).concat(['Shows', 'Performers', 'Equipamentos']);
+    var f = '<span>' + itens.map(esc).join('</span><span>') + '</span>';
+    $('faixa').innerHTML = f + f + f + f;
+
+    /* holofotes */
+    $('casting').innerHTML = arts.map(function (a, i) {
+      var orc = S.whatsapp ? wa('Olá! Quero um orçamento do ' + a.nome + ' pelo site da Abre a Porta.') : '#orcamento';
+      var ext = S.whatsapp ? ' target="_blank" rel="noopener"' : '';
+      var partes = a.nome.split(' '), ult = partes.pop();
+      var nomeH = (partes.length ? esc(partes.join(' ')) + '<br>' : '') + '<em>' + esc(ult) + '</em>';
+      var recorte = a.retrato && a.retrato !== a.capa && /\.(webp|png)(\?|$)/i.test(a.retrato);
+      var img = recorte
+        ? '<div class="img surge"><span class="disco"></span><img class="recorte" src="' + esc(a.retrato) + '" alt="' + esc(a.nome) + '" loading="lazy"></div>'
+        : '<div class="img surge"><div class="foto" style="background-image:' + cssUrl(a.retrato || a.capa) + '"></div>' + ((a.fotos || [])[1] ? '<span class="mini" style="background-image:' + cssUrl(a.fotos[1]) + '"></span>' : '') + '</div>';
+      return '<section class="holofote' + (i % 2 ? ' inverte' : '') + '" style="' + temas(a) + '"><div class="wrap">' +
+        '<div class="txt surge"><p class="selo">' + ('0' + (i + 1)).slice(-2) + ' · ' + esc(a.categoria || '') + '</p><h2>' + nomeH + '</h2>' +
+        (a.frase ? '<p class="frase">' + esc(a.frase) + '</p>' : '') +
+        ((a.numeros || []).length ? '<div class="nums">' + a.numeros.map(function (n) { return '<div><b>' + esc(n.valor) + '</b><span>' + esc(n.rotulo) + '</span></div>'; }).join('') + '</div>' : '') +
+        ((a.destaques || []).length ? '<ul class="lista-dest">' + a.destaques.map(function (d, k) { return '<li><b>' + ('0' + (k + 1)).slice(-2) + '</b>' + esc(d) + '</li>'; }).join('') + '</ul>' : '') +
+        ((a.eventos || []).length ? '<div class="tipos">' + a.eventos.map(function (e) { return '<span class="chip">' + esc(e) + '</span>'; }).join('') + '</div>' : '') +
+        '<div class="acoes"><a class="btn fogo seta" href="' + link(a) + '">Ver o show</a><a class="btn contorno" href="' + orc + '"' + ext + '>Pedir orçamento</a></div></div>' +
+        img + '</div></section>';
+    }).join('');
+
+    /* equipamentos */
+    if (S.mostrarEquipamentos && (S.equipamentos || []).length) $('equips').innerHTML = S.equipamentos.map(function (e) { return '<span class="chip" title="' + esc(e.texto) + '">' + esc(e.nome) + '</span>'; }).join('');
+    else $('servEquip').style.display = 'none';
+
+    /* agenda */
+    var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+    var dias = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'], meses = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+    var nomeArt = function (s) { var a = arts.filter(function (x) { return x.slug === s; })[0]; return a ? a.nome : s; };
+    var prox = (S.shows || []).map(function (s) { var p = String(s.data).split('-'); return Object.assign({}, s, { d: new Date(+p[0], +p[1] - 1, +p[2]) }); })
+      .filter(function (s) { return s.d >= hoje; }).sort(function (a, b) { return a.d - b.d; }).slice(0, 8);
+    $('shows').innerHTML = prox.length ? prox.map(function (s) {
+      return '<div class="show surge"><div class="d">' + ('0' + s.d.getDate()).slice(-2) + '.' + ('0' + (s.d.getMonth() + 1)).slice(-2) + '<small>' + dias[s.d.getDay()] + ' · ' + meses[s.d.getMonth()] + '</small></div>' +
+        '<div class="q"><strong>' + esc(nomeArt(s.artista)) + '</strong><p>' + (s.fechado ? 'Evento fechado' : esc(s.local)) + (s.cidade ? ' · ' + esc(s.cidade) : '') + '</p></div>' +
+        (s.fechado ? '<span class="chip">Data reservada</span>' : (s.link ? '<a class="btn contorno" href="' + esc(s.link) + '" target="_blank" rel="noopener">Ingressos</a>' : '<span></span>')) + '</div>';
+    }).join('') : '<p class="vazio">As datas confirmadas aparecem aqui. Quer garantir a sua? <a href="#orcamento">Peça um orçamento →</a></p>';
+
+    /* formulário */
+    var sel = $('selArtista');
+    arts.slice().reverse().forEach(function (a) { var o = document.createElement('option'); o.textContent = a.nome; sel.insertBefore(o, sel.firstChild); });
+    sel.value = 'Quero que vocês me indiquem';
+    var pre = new URLSearchParams(location.search).get('artista');
+    if (pre) arts.forEach(function (a) { if (a.slug === pre) sel.value = a.nome; });
+    $('formOrc').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var fm = ev.target, ok = $('ok');
+      if (!fm.nome.value.trim() || fm.whats.value.replace(/\D/g, '').length < 10) {
+        ok.style.cssText = 'display:block;background:#2A1A0A;border:1px solid #6B4A12;color:#FFB066';
+        ok.textContent = 'Preencha o seu nome e um WhatsApp com DDD.'; (fm.nome.value.trim() ? fm.whats : fm.nome).focus(); return;
+      }
+      var dt = fm.data.value ? fm.data.value.split('-').reverse().join('/') : 'a combinar';
+      var pedido = { nome: fm.nome.value.trim(), whatsapp: fm.whats.value.trim(), tipo: fm.tipo.value, data_evento: dt, cidade: fm.cidade.value.trim(), publico: fm.publico.value, atracao: fm.artista.value, equipamento: fm.equip.value, investimento: fm.verba.value };
+      window.enviarPedido(pedido);
+      var msg = 'Olá! Quero um orçamento pelo site da Abre a Porta.\n\nNome: ' + pedido.nome + '\nWhatsApp: ' + pedido.whatsapp +
+        '\nEvento: ' + pedido.tipo + '\nData: ' + dt + '\nCidade: ' + (pedido.cidade || '-') + '\nPúblico: ' + pedido.publico +
+        '\nAtração: ' + pedido.atracao + '\nEquipamento: ' + pedido.equipamento + '\nInvestimento: ' + pedido.investimento;
+      var url = S.whatsapp ? wa(msg) : 'mailto:' + S.email + '?subject=' + encodeURIComponent('Orçamento: ' + pedido.tipo) + '&body=' + encodeURIComponent(msg);
+      ok.style.cssText = 'display:block;background:#0F2A1A;border:1px solid #1E5A34;color:#4BE38A';
+      ok.textContent = 'Pronto! Abrimos o WhatsApp com o seu pedido. É só tocar em enviar.';
+      window.open(url, '_blank');
     });
-  }
-  lista();
-  window.addEventListener('mousemove', function (e) { flut.style.left = e.clientX + 'px'; flut.style.top = e.clientY + 'px'; }, { passive: true });
 
-  /* bento */
-  var shows = arts.filter(function (a) { return a.categoria === 'Shows'; })[0];
-  var perf = arts.filter(function (a) { return a.categoria === 'Performers'; })[0];
-  if (shows) { $('tileShows').style.cssText = bg(shows.capa, shows.cor) + ';background-size:cover;background-position:center'; $('tileShows').href = link(shows); }
-  if (perf) { $('tilePerf').style.cssText = bg(perf.capa, perf.cor) + ';background-size:cover;background-position:center'; $('tilePerf').href = link(perf); }
-  if (S.mostrarEquipamentos && S.equipamentos.length) {
-    $('equips').innerHTML = S.equipamentos.map(function (e) { return '<span class="chip" title="' + esc(e.texto) + '">' + esc(e.nome) + '</span>'; }).join('');
-  } else { $('tileEquip').style.display = 'none'; }
-
-  /* tipos de evento */
-  var tipos = [];
-  arts.forEach(function (a) { (a.eventos || []).forEach(function (e) { if (tipos.indexOf(e) < 0) tipos.push(e); }); });
-  if (tipos.length) $('tipos').innerHTML = tipos.map(function (e) { return '<span>' + esc(e) + '</span>'; }).join('');
-  else $('tiposSec').style.display = 'none';
-
-  /* agenda */
-  var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
-  var dias = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'], meses = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
-  var nomeArt = function (id) { var a = S.artistas.filter(function (x) { return x.id === id; })[0]; return a ? a.nome : id; };
-  var prox = (S.shows || []).map(function (s) { var p = s.data.split('-'); return Object.assign({}, s, { d: new Date(+p[0], +p[1] - 1, +p[2]) }); })
-    .filter(function (s) { return s.d >= hoje; }).sort(function (a, b) { return a.d - b.d; }).slice(0, 8);
-  $('shows').innerHTML = prox.length ? prox.map(function (s) {
-    return '<div class="show surge"><div class="d">' + ('0' + s.d.getDate()).slice(-2) + '.' + ('0' + (s.d.getMonth() + 1)).slice(-2) + '<small>' + dias[s.d.getDay()] + ' · ' + meses[s.d.getMonth()] + '</small></div>' +
-      '<div class="q"><strong>' + esc(nomeArt(s.artista)) + '</strong><p>' + (s.fechado ? 'Evento fechado' : esc(s.local)) + (s.cidade ? ' · ' + esc(s.cidade) : '') + '</p></div>' +
-      (s.fechado ? '<span class="chip">Data reservada</span>' : (s.link ? '<a class="btn linha" href="' + esc(s.link) + '" target="_blank" rel="noopener">Ingressos</a>' : '<span></span>')) + '</div>';
-  }).join('') : '<p class="vazio">As datas confirmadas aparecem aqui. Quer garantir a sua? <a href="#orcamento">Peça um orçamento →</a></p>';
-
-  /* clientes */
-  if (S.clientes && S.clientes.length) {
-    $('clientesSec').style.display = '';
-    $('clientes').innerHTML = S.clientes.map(function (c) { return '<img src="' + esc(c.logo) + '" alt="' + esc(c.nome) + '" loading="lazy">'; }).join('');
-  }
-
-  /* formulário */
-  var sel = $('selArtista');
-  arts.slice().reverse().forEach(function (a) { var o = document.createElement('option'); o.textContent = a.nome; sel.insertBefore(o, sel.firstChild); });
-  sel.value = 'Quero que vocês me indiquem';
-  var pre = new URLSearchParams(location.search).get('artista');
-  if (pre) arts.forEach(function (a) { if (a.id === pre) sel.value = a.nome; });
-  $('formOrc').addEventListener('submit', function (ev) {
-    ev.preventDefault();
-    var f = ev.target, ok = $('ok');
-    ok.style.display = 'block';
-    if (!f.nome.value.trim() || !f.whats.value.trim()) {
-      ok.style.cssText = 'display:block;background:#2A1F0A;border:1px solid #5A4512;color:#FFB066';
-      ok.textContent = 'Preencha pelo menos o seu nome e o WhatsApp.'; (f.nome.value.trim() ? f.whats : f.nome).focus(); return;
+    /* contatos */
+    var c = '';
+    if (S.whatsapp) {
+      var w = S.whatsapp.replace(/^55/, '');
+      c += '<a class="btn preto" href="' + wa('Olá! Vim pelo site da Abre a Porta.') + '" target="_blank" rel="noopener">WhatsApp (' + w.slice(0, 2) + ') ' + w.slice(2, w.length - 4) + '-' + w.slice(-4) + '</a>';
     }
-    var dt = f.data.value ? f.data.value.split('-').reverse().join('/') : 'a combinar';
-    var msg = 'Olá! Quero um orçamento pelo site da Abre a Porta.\n\nNome: ' + f.nome.value.trim() + '\nWhatsApp: ' + f.whats.value.trim() +
-      '\nEvento: ' + f.tipo.value + '\nData: ' + dt + '\nCidade: ' + (f.cidade.value.trim() || '-') + '\nPúblico: ' + f.publico.value +
-      '\nAtração: ' + f.artista.value + '\nEquipamento: ' + f.equip.value + '\nInvestimento: ' + f.verba.value;
-    var url = S.whatsapp ? wa(msg) : 'mailto:' + S.email + '?subject=' + encodeURIComponent('Orçamento: ' + f.tipo.value + ' em ' + dt) + '&body=' + encodeURIComponent(msg);
-    ok.style.cssText = 'display:block;background:#102A22;border:1px solid #1E5A44;color:#3DDC97';
-    ok.textContent = S.whatsapp ? 'Pronto! Abrimos o WhatsApp com o seu pedido. É só tocar em enviar.' : 'Pronto! Abrimos o seu e-mail com o pedido. É só tocar em enviar.';
-    window.open(url, '_blank');
+    c += '<a class="btn vazado" href="https://instagram.com/' + esc(S.instagram) + '" target="_blank" rel="noopener">@' + esc(S.instagram) + '</a>';
+    $('contatos').innerHTML = c;
   });
-
-  /* contatos */
-  var c = '';
-  if (S.whatsapp) c += '<a class="btn ouro" href="' + wa('Olá! Vim pelo site da Abre a Porta.') + '" target="_blank" rel="noopener">WhatsApp</a>';
-  c += '<a class="btn linha" href="https://instagram.com/' + esc(S.instagram) + '" target="_blank" rel="noopener">@' + esc(S.instagram) + '</a>';
-  c += '<a class="btn linha" href="mailto:' + esc(S.email) + '">' + esc(S.email) + '</a>';
-  if (!S.whatsapp) c = '<a class="btn ouro seta" href="#orcamento">Pedir orçamento</a>' + c;
-  $('contatos').innerHTML = c;
 })();
 </script>
 </body>

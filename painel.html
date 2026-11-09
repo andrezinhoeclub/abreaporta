@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel · Abre a Porta</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0A0808">
+<link rel="icon" type="image/png" href="site/icone-abreaporta.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Figtree:wght@400;500;700;800&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<style>
+:root{--preto:#0A0808;--p2:#131010;--card:#1A1515;--card2:#221B1B;--linha:rgba(255,241,224,.12);--linha2:rgba(255,241,224,.22);--creme:#FFF1E0;--t2:#E2D5C4;--t3:#B9A99A;--t4:#958677;--vermelho:#E8192C;--ouro:#FFC53D;--verde:#1FAE5B;--f-cartaz:"Big Shoulders Display",Impact,"Arial Narrow",sans-serif;--f-texto:Figtree,system-ui,-apple-system,"Segoe UI",sans-serif;--f-mono:"Martian Mono",ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--preto);color:var(--creme);font-family:var(--f-texto);-webkit-font-smoothing:antialiased;line-height:1.5}
+h1,h2,h3{margin:0;font-family:var(--f-cartaz);font-weight:900;text-transform:uppercase;line-height:.92}
+p{margin:0}
+a{color:var(--ouro)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--ouro);outline-offset:2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:0;font-weight:800;font-size:14px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn.fogo{background:var(--vermelho);color:#fff}
+.btn.linha{background:transparent;border:1.5px solid var(--linha2);color:var(--creme)}
+.btn.linha:hover{border-color:var(--creme)}
+.btn.perigo{background:transparent;border:1.5px solid rgba(232,25,44,.5);color:#FF8A95}
+.btn.peq{min-height:36px;padding:0 12px;font-size:13px}
+.btn:disabled{opacity:.5;cursor:wait}
+.mono{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+label.c{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:var(--t2)}
+label.c small{font-weight:500;color:var(--t4)}
+input.i,select.i,textarea.i{min-height:46px;border-radius:12px;border:1px solid var(--linha2);background:var(--p2);padding:10px 12px;font-size:15px;width:100%}
+textarea.i{min-height:110px;resize:vertical;line-height:1.5}
+input.i:focus,select.i:focus,textarea.i:focus{outline:none;border-color:var(--vermelho)}
+input[type=color].i{padding:4px;height:46px;cursor:pointer}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:760px){.g2,.g3{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--linha);border-radius:20px;padding:20px}
+.box h3{font-size:28px;margin-bottom:14px}
+.aviso{padding:12px 14px;border-radius:12px;font-size:14px;font-weight:700}
+.aviso.ok{background:#0F2A1A;border:1px solid #1E5A34;color:#4BE38A}
+.aviso.erro{background:#2A0F12;border:1px solid #6B1E26;color:#FF8A95}
+.aviso.info{background:#2A200A;border:1px solid #6B5212;color:#FFD66B}
+
+/* login */
+#login{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 50% 120%,rgba(232,25,44,.35),transparent 60%)}
+#login form{width:100%;max-width:400px;display:flex;flex-direction:column;gap:14px}
+#login img{width:170px;margin:0 auto 10px}
+
+/* app */
+#app{display:none;min-height:100vh}
+.lado{position:fixed;inset:0 auto 0 0;width:240px;background:var(--p2);border-right:1px solid var(--linha);padding:20px 14px;display:flex;flex-direction:column;gap:18px;z-index:20}
+.lado img{width:140px;margin-left:6px}
+.lado nav{display:flex;flex-direction:column;gap:3px}
+.lado nav button{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:11px 14px;border-radius:12px;border:0;background:transparent;color:var(--t2);font-weight:700;font-size:15px;cursor:pointer}
+.lado nav button.on{background:var(--vermelho);color:#fff}
+.lado nav em{font-style:normal;font-size:11px;font-weight:900;padding:2px 8px;border-radius:999px;background:var(--ouro);color:var(--preto)}
+.lado .pe{margin-top:auto;display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--t4)}
+main.m{margin-left:240px;padding:26px clamp(16px,3vw,34px) 120px;max-width:1200px}
+.topo2{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.topo2 h1{font-size:clamp(40px,5vw,64px)}
+@media (max-width:860px){.lado{position:sticky;top:0;width:auto;inset:auto;flex-direction:row;align-items:center;padding:10px 12px;overflow-x:auto}.lado img{width:110px}.lado nav{flex-direction:row}.lado .pe{display:none}main.m{margin-left:0}}
+
+/* artistas */
+.arts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.art{border-radius:20px;overflow:hidden;background:var(--card);border:1px solid var(--linha);cursor:pointer;text-align:left;padding:0;display:flex;flex-direction:column}
+.art:hover{border-color:var(--vermelho)}
+.art .f{height:170px;background:#000 center/cover no-repeat;position:relative}
+.art .f:after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--cor,#E8192C)}
+.art .i2{padding:14px;display:flex;flex-direction:column;gap:6px}
+.art h3{font-size:28px}
+.barra{height:7px;border-radius:999px;background:var(--linha);overflow:hidden}
+.barra i{display:block;height:100%;background:linear-gradient(90deg,var(--ouro),var(--vermelho))}
+.st{display:inline-block;font-size:11px;font-weight:900;padding:3px 9px;border-radius:999px}
+.st.pub{background:var(--verde);color:#04130A}
+.st.ras{background:#3A2C0A;color:#FFD66B}
+
+/* editor */
+.editor{display:flex;flex-direction:column;gap:16px}
+.salvar{position:fixed;left:240px;right:0;bottom:0;z-index:15;background:rgba(10,8,8,.94);backdrop-filter:blur(10px);border-top:1px solid var(--linha);padding:12px clamp(16px,3vw,34px);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+@media (max-width:860px){.salvar{left:0}}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:760px){.slots{grid-template-columns:1fr}}
+.slot{border-radius:16px;border:1px dashed var(--linha2);padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--p2)}
+.slot .pv{height:150px;border-radius:12px;background:var(--card2) center/contain no-repeat;display:grid;place-items:center;color:var(--t4);font-size:12px;font-weight:700}
+.slot .acoes{display:flex;gap:6px;flex-wrap:wrap}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.gal .ft{position:relative;aspect-ratio:1;border-radius:12px;background:var(--card2) center/cover no-repeat;border:1px solid var(--linha)}
+.gal .ft button{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;border:0;background:rgba(0,0,0,.7);color:#fff;font-weight:900;cursor:pointer}
+.gal .ft .ord{position:absolute;left:6px;bottom:6px;display:flex;gap:4px}
+.gal .ft .ord button{position:static;width:28px;height:28px}
+.kitl{display:flex;flex-direction:column;gap:8px}
+.kitl .k{display:grid;grid-template-columns:1fr 90px auto;gap:8px;align-items:center;padding:10px;border-radius:12px;background:var(--p2);border:1px solid var(--linha)}
+.kitl .k a{font-size:12px;word-break:break-all}
+.sw{display:flex;align-items:center;gap:10px;font-weight:700;cursor:pointer}
+.sw input{width:22px;height:22px;accent-color:var(--vermelho)}
+
+/* agenda e pedidos */
+.lista{display:flex;flex-direction:column;gap:8px}
+.lin{display:grid;grid-template-columns:110px 1fr auto;gap:14px;align-items:center;padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--linha)}
+.lin .d{font-family:var(--f-cartaz);font-size:30px;font-weight:900;line-height:1}
+.lin .d small{display:block;font-family:var(--f-mono);font-size:10px;color:var(--ouro)}
+.lin.passado{opacity:.5}
+@media (max-width:620px){.lin{grid-template-columns:80px 1fr}.lin > :last-child{grid-column:1/-1}}
+.filtros{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.filtros button{min-height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--linha2);background:transparent;color:var(--t2);font-weight:700;font-size:13px;cursor:pointer}
+.filtros button.on{background:var(--creme);color:var(--preto);border-color:var(--creme)}
+.ped{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;padding:16px;border-radius:16px;background:var(--card);border:1px solid var(--linha)}
+.ped.novo{border-color:#6B5212}
+.ped dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px}
+.ped dt{color:var(--t4)}
+.ped dd{margin:0;font-weight:700}
+.ped .lado2{display:flex;flex-direction:column;gap:8px}
+@media (max-width:760px){.ped{grid-template-columns:1fr}}
+.rod{margin-top:30px;font-size:12px;color:var(--t4);text-align:center}
+.oculto{display:none!important}
+</style>
+</head>
+<body>
+<script src="site/config.js"></script>
+
+<!-- LOGIN -->
+<section id="login">
+  <form id="fLogin" novalidate>
+    <img src="site/logo-abreaporta.png" alt="Abre a Porta">
+    <h1 style="font-size:46px;text-align:center">Painel da agência</h1>
+    <label class="c">E-mail<input class="i" type="email" name="email" autocomplete="username" required></label>
+    <label class="c">Senha<input class="i" type="password" name="senha" autocomplete="current-password" required></label>
+    <button class="btn fogo" type="submit" style="min-height:52px;font-size:16px">Entrar</button>
+    <button class="btn linha" type="button" id="esqueci">Esqueci a senha</button>
+    <p id="msgLogin"></p>
+    <p class="rod">Desenvolvido por Abre a Porta · painel v1.0</p>
+  </form>
+</section>
+
+<!-- APP -->
+<div id="app">
+  <aside class="lado">
+    <img src="site/logo-abreaporta.png" alt="Abre a Porta">
+    <nav aria-label="Menu do painel">
+      <button type="button" data-tela="artistas" class="on">Artistas</button>
+      <button type="button" data-tela="agenda">Agenda</button>
+      <button type="button" data-tela="pedidos">Pedidos <em id="nNovos" class="oculto">0</em></button>
+      <button type="button" data-tela="ajustes">Ajustes</button>
+    </nav>
+    <div class="pe">
+      <a class="btn linha peq" href="./" target="_blank" rel="noopener">Ver o site ↗</a>
+      <button class="btn linha peq" type="button" id="sair">Sair</button>
+      <span id="quem"></span>
+      <span>Desenvolvido por Abre a Porta · painel v1.0</span>
+    </div>
+  </aside>
+  <main class="m" id="tela"></main>
+</div>
+
+<input type="file" id="arquivo" class="oculto">
+
+<script>
+(function () {
+  var C = window.CONFIG_SUPABASE || {};
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var cssUrl = function (u) { return u ? "url('" + String(u).replace(/['"\\()\s]/g, encodeURIComponent) + "')" : 'none'; };
+  var msg = function (el, tipo, texto) { el.innerHTML = '<p class="aviso ' + tipo + '">' + esc(texto) + '</p>'; };
+
+  if (!C.supabaseUrl || !C.supabaseChave || !window.supabase) {
+    msg($('msgLogin'), 'erro', !window.supabase ? 'Não consegui carregar o sistema. Confira a internet e recarregue.' : 'Falta ligar o painel ao Supabase: preencha o arquivo site/config.js.');
+    $('fLogin').querySelector('button[type=submit]').disabled = true;
+    return;
+  }
+  var sb = window.supabase.createClient(C.supabaseUrl, C.supabaseChave);
+  var estado = { artistas: [], tela: 'artistas' };
+
+  /* ---------- login ---------- */
+  $('fLogin').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target, b = f.querySelector('button[type=submit]'); b.disabled = true;
+    sb.auth.signInWithPassword({ email: f.email.value.trim(), password: f.senha.value }).then(function (r) {
+      b.disabled = false;
+      if (r.error) return msg($('msgLogin'), 'erro', 'E-mail ou senha errados.');
+      iniciar(r.data.user);
+    });
+  });
+  $('esqueci').onclick = function () {
+    var em = $('fLogin').email.value.trim();
+    if (!em) return msg($('msgLogin'), 'info', 'Digite o seu e-mail no campo acima e clique de novo.');
+    sb.auth.resetPasswordForEmail(em, { redirectTo: location.origin + location.pathname }).then(function (r) {
+      msg($('msgLogin'), r.error ? 'erro' : 'ok', r.error ? 'Não deu para enviar agora. Tente de novo.' : 'Se o e-mail estiver cadastrado, chega um link para criar uma senha nova.');
+    });
+  };
+  sb.auth.onAuthStateChange(function (ev, sess) {
+    if (ev === 'PASSWORD_RECOVERY') {
+      var nova = prompt('Digite a sua nova senha (mínimo 8 caracteres):');
+      if (nova && nova.length >= 8) sb.auth.updateUser({ password: nova }).then(function (r) { alert(r.error ? 'Não deu para trocar a senha.' : 'Senha trocada!'); });
+    }
+  });
+  sb.auth.getSession().then(function (r) { if (r.data.session) iniciar(r.data.session.user); });
+  $('sair').onclick = function () { sb.auth.signOut().then(function () { location.reload(); }); };
+
+  function iniciar(user) {
+    sb.from('admins').select('email').then(function (r) {
+      if (r.error || !r.data.length) {
+        msg($('msgLogin'), 'erro', 'Este e-mail entrou, mas não está liberado como administrador. Confira o e-mail na tabela admins do Supabase.');
+        sb.auth.signOut(); return;
+      }
+      $('login').style.display = 'none'; $('app').style.display = 'block';
+      $('quem').textContent = user.email;
+      contarNovos(); ir('artistas');
+    });
+  }
+
+  /* ---------- navegação ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll('.lado nav button'), function (b) { b.onclick = function () { ir(b.getAttribute('data-tela')); }; });
+  function ir(t) {
+    estado.tela = t;
+    Array.prototype.forEach.call(document.querySelectorAll('.lado nav button'), function (b) { b.classList.toggle('on', b.getAttribute('data-tela') === t); });
+    window.scrollTo(0, 0);
+    ({ artistas: telaArtistas, agenda: telaAgenda, pedidos: telaPedidos, ajustes: telaAjustes })[t]();
+  }
+  function contarNovos() {
+    sb.from('pedidos').select('id', { count: 'exact', head: true }).eq('status', 'novo').then(function (r) {
+      var n = r.count || 0; $('nNovos').textContent = n; $('nNovos').classList.toggle('oculto', !n);
+    });
+  }
+
+  /* ---------- envio de arquivos ---------- */
+  function slugify(t) { return String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60); }
+  function encolher(file) {
+    return new Promise(function (ok) {
+      if (!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size < 400 * 1024) return ok(file);
+      var img = new Image(), url = URL.createObjectURL(file);
+      img.onload = function () {
+        var max = 2000, w = img.width, h = img.height, k = Math.min(1, max / Math.max(w, h));
+        var cv = document.createElement('canvas'); cv.width = Math.round(w * k); cv.height = Math.round(h * k);
+        cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+        cv.toBlob(function (b) { URL.revokeObjectURL(url); ok(b && b.size < file.size ? new File([b], file.name.replace(/\.\w+$/, '') + '.webp', { type: 'image/webp' }) : file); }, 'image/webp', 0.86);
+      };
+      img.onerror = function () { ok(file); };
+      img.src = url;
+    });
+  }
+  function escolher(aceita, varios) {
+    return new Promise(function (ok) {
+      var inp = $('arquivo'); inp.value = ''; inp.accept = aceita; inp.multiple = !!varios;
+      inp.onchange = function () { ok(Array.prototype.slice.call(inp.files)); };
+      inp.click();
+    });
+  }
+  function enviar(pasta, file) {
+    return encolher(file).then(function (f) {
+      var nome = pasta + '/' + Date.now() + '-' + slugify(f.name.replace(/\.\w+$/, '')) + '.' + (f.name.split('.').pop() || 'bin').toLowerCase();
+      return sb.storage.from('midia').upload(nome, f, { contentType: f.type || undefined, upsert: false }).then(function (r) {
+        if (r.error) throw r.error;
+        return sb.storage.from('midia').getPublicUrl(nome).data.publicUrl;
+      });
+    });
+  }
+
+  /* ---------- ARTISTAS ---------- */
+  function completo(a) {
+    var itens = [a.capa, a.retrato, a.logo, a.frase, (a.release || []).length, (a.destaques || []).length, (a.fotos || []).length >= 3, (a.videos || []).length, (a.presskit || []).length];
+    var n = itens.filter(Boolean).length;
+    var faltam = [];
+    if (!a.capa) faltam.push('foto de capa'); if (!(a.videos || []).length) faltam.push('vídeos'); if (!(a.presskit || []).length) faltam.push('press kit'); if (!(a.release || []).length) faltam.push('release');
+    return { p: Math.round(n / itens.length * 100), falta: faltam.slice(0, 2).join(' e ') };
+  }
+  function telaArtistas() {
+    var T = $('tela');
+    T.innerHTML = '<div class="topo2"><div><p class="mono">Casting</p><h1>Artistas</h1></div><button class="btn fogo" id="novoArt">+ Novo artista</button></div><div id="avisoA"></div><div class="arts" id="arts"><p class="mono">Carregando…</p></div>';
+    $('novoArt').onclick = function () { editar(null); };
+    sb.from('artistas').select('*').order('ordem').order('nome').then(function (r) {
+      if (r.error) return msg($('avisoA'), 'erro', 'Não consegui ler os artistas: ' + r.error.message);
+      estado.artistas = r.data;
+      $('arts').innerHTML = r.data.length ? r.data.map(function (a, i) {
+        var c = completo(a);
+        return '<button class="art" type="button" data-i="' + i + '" style="--cor:' + esc(a.cor) + '"><div class="f" style="background-image:' + cssUrl(a.capa || a.retrato) + '"></div><div class="i2">' +
+          '<span class="st ' + (a.publicado ? 'pub">NO SITE' : 'ras">RASCUNHO') + '</span><h3>' + esc(a.nome) + '</h3><span class="mono">' + esc(a.categoria) + ' · ' + esc(a.estilo || '') + '</span>' +
+          '<div class="barra"><i style="width:' + c.p + '%"></i></div><span style="font-size:12px;color:var(--t3)">' + c.p + '% do material' + (c.falta ? ' · falta ' + esc(c.falta) : '') + '</span></div></button>';
+      }).join('') : '<p class="aviso info">Nenhum artista ainda. Clique em "+ Novo artista".</p>';
+      Array.prototype.forEach.call(document.querySelectorAll('.art'), function (b) { b.onclick = function () { editar(estado.artistas[+b.getAttribute('data-i')]); }; });
+    });
+  }
+
+  function linhas(t) { return String(t || '').split('\n').map(function (s) { return s.trim(); }).filter(Boolean); }
+  function paragrafos(t) { return String(t || '').split(/\n\s*\n/).map(function (s) { return s.replace(/\s*\n\s*/g, ' ').trim(); }).filter(Boolean); }
+
+  function editar(orig) {
+    var a = orig ? JSON.parse(JSON.stringify(orig)) : { nome: '', slug: '', categoria: 'Shows', estilo: '', frase: '', cor: '#E8192C', cor2: '#FFC53D', fundo: '#0B0909', capa: '', retrato: '', logo: '', publicado: false, ordem: 100, numeros: [], destaques: [], release: [], eventos: [], videos: [], fotos: [], presskit: [], redes: {} };
+    a.redes = a.redes || {};
+    var priv = { cache_base: '', valores: '', sinal: '', comissao: '', contato: '', notas: '' };
+    var T = $('tela');
+    T.innerHTML =
+      '<div class="topo2"><div><button class="btn linha peq" id="voltar">← Artistas</button><h1 style="margin-top:12px">' + (orig ? esc(a.nome) : 'Novo artista') + '</h1></div></div>' +
+      '<form class="editor" id="fArt" novalidate>' +
+      '<div class="box"><h3>Dados</h3><div class="g3">' +
+        '<label class="c">Nome<input class="i" name="nome" maxlength="80" required value="' + esc(a.nome) + '"></label>' +
+        '<label class="c">Endereço no site<small>abreaporta.com.br/artista.html?a=</small><input class="i" name="slug" maxlength="60" value="' + esc(a.slug) + '"></label>' +
+        '<label class="c">Categoria<select class="i" name="categoria"><option' + (a.categoria === 'Shows' ? ' selected' : '') + '>Shows</option><option' + (a.categoria === 'Performers' ? ' selected' : '') + '>Performers</option></select></label>' +
+        '<label class="c">Estilo<small>ex.: Funk eletrônico</small><input class="i" name="estilo" value="' + esc(a.estilo) + '"></label>' +
+        '<label class="c" style="grid-column:span 2">Frase de impacto<small>uma linha que vende o show</small><input class="i" name="frase" value="' + esc(a.frase) + '"></label>' +
+        '<label class="c">Cor principal<input class="i" type="color" name="cor" value="' + esc(a.cor || '#E8192C') + '"></label>' +
+        '<label class="c">Cor de apoio<input class="i" type="color" name="cor2" value="' + esc(a.cor2 || '#FFC53D') + '"></label>' +
+        '<label class="c">Cor de fundo<input class="i" type="color" name="fundo" value="' + esc(a.fundo || '#0B0909') + '"></label>' +
+        '<label class="c">Ordem no site<small>1 aparece primeiro</small><input class="i" type="number" name="ordem" value="' + esc(a.ordem) + '"></label>' +
+        '<label class="sw" style="grid-column:span 2"><input type="checkbox" name="publicado"' + (a.publicado ? ' checked' : '') + '> Mostrar no site</label>' +
+      '</div></div>' +
+      '<div class="box"><h3>Imagens principais</h3><div class="slots">' + ['capa', 'retrato', 'logo'].map(function (k) {
+        var tit = { capa: 'Foto de capa', retrato: 'Foto em destaque', logo: 'Logo' }[k];
+        var dica = { capa: 'Deitada, bem grande. Aparece no topo.', retrato: 'Em pé. Se for PNG/WEBP sem fundo, fica em cima de um círculo colorido.', logo: 'De preferência sem fundo (PNG ou WEBP).' }[k];
+        return '<div class="slot"><b>' + tit + '</b><small style="color:var(--t4)">' + dica + '</small><div class="pv" id="pv-' + k + '" style="background-image:' + cssUrl(a[k]) + '">' + (a[k] ? '' : 'sem imagem') + '</div><div class="acoes"><button type="button" class="btn linha peq" data-up="' + k + '">Enviar</button><button type="button" class="btn perigo peq" data-rm="' + k + '">Tirar</button></div></div>';
+      }).join('') + '</div></div>' +
+      '<div class="box"><h3>Galeria de fotos</h3><div class="gal" id="gal"></div><div style="margin-top:12px"><button type="button" class="btn linha" id="addFotos">+ Enviar fotos</button> <span class="mono">pode escolher várias de uma vez</span></div></div>' +
+      '<div class="box"><h3>O show</h3><div class="g2">' +
+        '<label class="c">Destaques do show<small>um por linha · ex.: Bazuca de CO2</small><textarea class="i" name="destaques">' + esc((a.destaques || []).join('\n')) + '</textarea></label>' +
+        '<label class="c">Números<small>um por linha · valor | texto · ex.: +7 | estados</small><textarea class="i" name="numeros">' + esc((a.numeros || []).map(function (n) { return n.valor + ' | ' + n.rotulo; }).join('\n')) + '</textarea></label>' +
+        '<label class="c" style="grid-column:1/-1">Release<small>deixe uma linha em branco entre os parágrafos</small><textarea class="i" name="release" style="min-height:180px">' + esc((a.release || []).join('\n\n')) + '</textarea></label>' +
+        '<label class="c">Tipos de evento<small>um por linha · ex.: Casamentos</small><textarea class="i" name="eventos">' + esc((a.eventos || []).join('\n')) + '</textarea></label>' +
+        '<label class="c">Vídeos do YouTube<small>um link por linha</small><textarea class="i" name="videos">' + esc((a.videos || []).join('\n')) + '</textarea></label>' +
+      '</div></div>' +
+      '<div class="box"><h3>Redes</h3><div class="g2">' +
+        '<label class="c">Site oficial<input class="i" name="r_site" placeholder="https://" value="' + esc(a.redes.site || '') + '"></label>' +
+        '<label class="c">Instagram<small>só o nome, sem @</small><input class="i" name="r_instagram" value="' + esc(a.redes.instagram || '') + '"></label>' +
+        '<label class="c">TikTok<small>só o nome, sem @</small><input class="i" name="r_tiktok" value="' + esc(a.redes.tiktok || '') + '"></label>' +
+        '<label class="c">YouTube<small>link do canal</small><input class="i" name="r_youtube" value="' + esc(a.redes.youtube || '') + '"></label>' +
+      '</div></div>' +
+      '<div class="box"><h3>Press kit</h3><p style="color:var(--t3);font-size:14px;margin-bottom:12px">Release, rider técnico, mapa de palco, logos… O contratante baixa direto da página do artista.</p><div class="kitl" id="kit"></div><div style="margin-top:12px"><button type="button" class="btn linha" id="addKit">+ Enviar arquivo</button></div></div>' +
+      '<div class="box" style="border-color:#6B5212"><h3>Só você vê</h3><div class="g3">' +
+        '<label class="c">Cachê base<input class="i" name="p_cache_base"></label>' +
+        '<label class="c">Sinal para reservar<input class="i" name="p_sinal" placeholder="ex.: 50% no PIX"></label>' +
+        '<label class="c">Sua comissão<input class="i" name="p_comissao"></label>' +
+        '<label class="c" style="grid-column:span 3">Valores por região<textarea class="i" name="p_valores" placeholder="Curitiba: R$ …&#10;Interior do PR: R$ … + transporte"></textarea></label>' +
+        '<label class="c">Contato do artista<input class="i" name="p_contato"></label>' +
+        '<label class="c" style="grid-column:span 2">Anotações<textarea class="i" name="p_notas" style="min-height:46px"></textarea></label>' +
+      '</div></div>' +
+      '<div id="avisoE"></div>' +
+      '</form>' +
+      '<div class="salvar"><button class="btn fogo" id="bSalvar" type="button">Salvar</button>' + (orig ? '<a class="btn linha" target="_blank" rel="noopener" href="artista.html?a=' + encodeURIComponent(a.slug) + '">Ver no site ↗</a><button class="btn perigo" id="bApagar" type="button" style="margin-left:auto">Apagar artista</button>' : '') + '</div>';
+
+    var f = $('fArt');
+    $('voltar').onclick = function () { ir('artistas'); };
+    f.nome.addEventListener('input', function () { if (!orig) f.slug.value = slugify(f.nome.value); });
+    if (orig) sb.from('artistas_privado').select('*').eq('artista_id', orig.id).maybeSingle().then(function (r) {
+      if (r.data) { priv = r.data; ['cache_base', 'sinal', 'comissao', 'valores', 'contato', 'notas'].forEach(function (k) { f['p_' + k].value = priv[k] || ''; }); }
+    });
+    var pasta = function () { return 'artistas/' + (slugify(f.slug.value || f.nome.value) || 'sem-nome'); };
+    var aviso = function (tipo, t) { msg($('avisoE'), tipo, t); $('avisoE').scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+
+    Array.prototype.forEach.call(T.querySelectorAll('[data-up]'), function (b) {
+      b.onclick = function () {
+        var k = b.getAttribute('data-up');
+        escolher('image/*').then(function (fs) {
+          if (!fs.length) return; b.disabled = true; b.textContent = 'Enviando…';
+          enviar(pasta(), fs[0]).then(function (url) { a[k] = url; $('pv-' + k).style.backgroundImage = cssUrl(url); $('pv-' + k).textContent = ''; })
+            .catch(function (e) { aviso('erro', 'Não deu para enviar: ' + e.message); })
+            .then(function () { b.disabled = false; b.textContent = 'Enviar'; });
+        });
+      };
+    });
+    Array.prototype.forEach.call(T.querySelectorAll('[data-rm]'), function (b) {
+      b.onclick = function () { var k = b.getAttribute('data-rm'); a[k] = ''; $('pv-' + k).style.backgroundImage = 'none'; $('pv-' + k).textContent = 'sem imagem'; };
+    });
+
+    function desenharGal() {
+      $('gal').innerHTML = (a.fotos || []).map(function (u, i) {
+        return '<div class="ft" style="background-image:' + cssUrl(u) + '"><button type="button" data-tira="' + i + '" aria-label="Tirar foto">×</button><span class="ord"><button type="button" data-mv="' + i + ',-1" aria-label="Mover para trás">‹</button><button type="button" data-mv="' + i + ',1" aria-label="Mover para frente">›</button></span></div>';
+      }).join('') || '<p class="mono">Nenhuma foto ainda</p>';
+      Array.prototype.forEach.call($('gal').querySelectorAll('[data-tira]'), function (b) { b.onclick = function () { a.fotos.splice(+b.getAttribute('data-tira'), 1); desenharGal(); }; });
+      Array.prototype.forEach.call($('gal').querySelectorAll('[data-mv]'), function (b) {
+        b.onclick = function () { var p = b.getAttribute('data-mv').split(','), i = +p[0], j = i + (+p[1]); if (j < 0 || j >= a.fotos.length) return; var x = a.fotos[i]; a.fotos[i] = a.fotos[j]; a.fotos[j] = x; desenharGal(); };
+      });
+    }
+    desenharGal();
+    $('addFotos').onclick = function () {
+      escolher('image/*', true).then(function (fs) {
+        if (!fs.length) return; var b = $('addFotos'); b.disabled = true; var n = 0;
+        var seq = Promise.resolve();
+        fs.forEach(function (file) { seq = seq.then(function () { b.textContent = 'Enviando ' + (++n) + ' de ' + fs.length + '…'; return enviar(pasta(), file).then(function (url) { a.fotos = (a.fotos || []).concat([url]); desenharGal(); }); }); });
+        seq.catch(function (e) { aviso('erro', 'Uma foto não foi: ' + e.message); }).then(function () { b.disabled = false; b.textContent = '+ Enviar fotos'; });
+      });
+    };
+
+    function desenharKit() {
+      $('kit').innerHTML = (a.presskit || []).map(function (k, i) {
+        return '<div class="k"><input class="i" data-kn="' + i + '" value="' + esc(k.nome) + '" aria-label="Nome do arquivo"><span class="mono">' + esc(k.tipo) + '</span><button type="button" class="btn perigo peq" data-kr="' + i + '">Tirar</button><a href="' + esc(k.arquivo) + '" target="_blank" rel="noopener" style="grid-column:1/-1">' + esc(k.arquivo) + '</a></div>';
+      }).join('') || '<p class="mono">Nenhum arquivo ainda</p>';
+      Array.prototype.forEach.call($('kit').querySelectorAll('[data-kn]'), function (inp) { inp.oninput = function () { a.presskit[+inp.getAttribute('data-kn')].nome = inp.value; }; });
+      Array.prototype.forEach.call($('kit').querySelectorAll('[data-kr]'), function (b) { b.onclick = function () { a.presskit.splice(+b.getAttribute('data-kr'), 1); desenharKit(); }; });
+    }
+    desenharKit();
+    $('addKit').onclick = function () {
+      escolher('.pdf,.zip,.png,.jpg,.jpeg,.webp,.mp4,.mov', false).then(function (fs) {
+        if (!fs.length) return; var b = $('addKit'); b.disabled = true; b.textContent = 'Enviando…';
+        var file = fs[0], ext = (file.name.split('.').pop() || '').toUpperCase();
+        (/\.(pdf|zip|mp4|mov)$/i.test(file.name) ? sb.storage.from('midia').upload(pasta() + '/kit-' + Date.now() + '-' + slugify(file.name.replace(/\.\w+$/, '')) + '.' + ext.toLowerCase(), file, { contentType: file.type || undefined }).then(function (r) { if (r.error) throw r.error; return sb.storage.from('midia').getPublicUrl(r.data.path).data.publicUrl; }) : enviar(pasta(), file))
+          .then(function (url) { a.presskit = (a.presskit || []).concat([{ nome: file.name.replace(/\.\w+$/, '').replace(/[-_]+/g, ' '), tipo: ext === 'JPEG' ? 'JPG' : ext, arquivo: url }]); desenharKit(); })
+          .catch(function (e) { aviso('erro', 'Não deu para enviar: ' + e.message + (file.size > 25 * 1024 * 1024 ? ' (o limite é 25 MB por arquivo)' : '')); })
+          .then(function () { b.disabled = false; b.textContent = '+ Enviar arquivo'; });
+      });
+    };
+
+    $('bSalvar').onclick = function () {
+      var b = $('bSalvar');
+      var dados = {
+        nome: f.nome.value.trim(), slug: slugify(f.slug.value || f.nome.value), categoria: f.categoria.value, estilo: f.estilo.value.trim(), frase: f.frase.value.trim(),
+        cor: f.cor.value, cor2: f.cor2.value, fundo: f.fundo.value, ordem: parseInt(f.ordem.value, 10) || 100, publicado: f.publicado.checked,
+        capa: a.capa || '', retrato: a.retrato || '', logo: a.logo || '', fotos: a.fotos || [], presskit: a.presskit || [],
+        destaques: linhas(f.destaques.value), eventos: linhas(f.eventos.value), videos: linhas(f.videos.value), release: paragrafos(f.release.value),
+        numeros: linhas(f.numeros.value).map(function (l) { var p = l.split('|'); return { valor: (p[0] || '').trim(), rotulo: (p.slice(1).join('|') || '').trim() }; }).filter(function (n) { return n.valor; }),
+        redes: { site: f.r_site.value.trim(), instagram: f.r_instagram.value.trim().replace(/^@/, ''), tiktok: f.r_tiktok.value.trim().replace(/^@/, ''), youtube: f.r_youtube.value.trim() }
+      };
+      if (!dados.nome) return aviso('erro', 'Coloque o nome do artista.');
+      if (dados.slug.length < 2) return aviso('erro', 'O endereço no site precisa ter pelo menos 2 letras.');
+      b.disabled = true; b.textContent = 'Salvando…';
+      var q = orig ? sb.from('artistas').update(dados).eq('id', orig.id).select().single() : sb.from('artistas').insert(dados).select().single();
+      q.then(function (r) {
+        if (r.error) throw new Error(/duplicate|unique/i.test(r.error.message) ? 'Já existe um artista com esse endereço no site. Mude o campo "Endereço no site".' : r.error.message);
+        var p = { artista_id: r.data.id };
+        ['cache_base', 'sinal', 'comissao', 'valores', 'contato', 'notas'].forEach(function (k) { p[k] = f['p_' + k].value; });
+        return sb.from('artistas_privado').upsert(p).then(function (r2) { if (r2.error) throw r2.error; return r.data; });
+      }).then(function (salvo) {
+        aviso('ok', 'Salvo! ' + (salvo.publicado ? 'Já está no site.' : 'Está como rascunho (não aparece no site).'));
+        if (!orig) setTimeout(function () { editar(salvo); }, 600); else orig = salvo;
+      }).catch(function (e) { aviso('erro', 'Não salvou: ' + e.message); })
+        .then(function () { b.disabled = false; b.textContent = 'Salvar'; });
+    };
+    if (orig) $('bApagar').onclick = function () {
+      if (!confirm('Apagar "' + orig.nome + '" do site e da agenda? Isso não tem volta.')) return;
+      sb.from('artistas').delete().eq('id', orig.id).then(function (r) { if (r.error) return aviso('erro', r.error.message); ir('artistas'); });
+    };
+  }
+
+  /* ---------- AGENDA ---------- */
+  function telaAgenda() {
+    var T = $('tela');
+    T.innerHTML = '<div class="topo2"><div><p class="mono">Shows confirmados</p><h1>Agenda</h1></div></div>' +
+      '<form class="box" id="fShow" novalidate style="margin-bottom:18px"><h3 id="tShow">Novo show</h3><div class="g3">' +
+      '<label class="c">Artista<select class="i" name="artista" id="selA"></select></label>' +
+      '<label class="c">Data<input class="i" type="date" name="data" required></label>' +
+      '<label class="c">Cidade<input class="i" name="cidade" placeholder="Curitiba · PR"></label>' +
+      '<label class="c">Local<input class="i" name="local" placeholder="Nome da casa"></label>' +
+      '<label class="c">Link de ingressos<input class="i" name="link" placeholder="https://"></label>' +
+      '<label class="sw" style="align-self:end;min-height:46px"><input type="checkbox" name="fechado"> Evento fechado (não mostra o local)</label>' +
+      '</div><div style="display:flex;gap:10px;margin-top:14px"><button class="btn fogo" type="submit">Salvar show</button><button class="btn linha oculto" type="button" id="cancelaShow">Cancelar</button></div><div id="avisoS" style="margin-top:10px"></div></form>' +
+      '<div class="lista" id="listaShows"><p class="mono">Carregando…</p></div>';
+    var f = $('fShow'), editando = null;
+    sb.from('artistas').select('id,nome').order('ordem').then(function (r) {
+      $('selA').innerHTML = (r.data || []).map(function (a) { return '<option value="' + a.id + '">' + esc(a.nome) + '</option>'; }).join('');
+      carregar();
+    });
+    function carregar() {
+      sb.from('shows').select('*, artistas(nome)').order('data', { ascending: true }).then(function (r) {
+        if (r.error) return msg($('listaShows'), 'erro', r.error.message);
+        var hoje = new Date().toISOString().slice(0, 10);
+        var fut = r.data.filter(function (s) { return s.data >= hoje; }), pas = r.data.filter(function (s) { return s.data < hoje; }).reverse().slice(0, 10);
+        var lin = function (s, passado) {
+          var p = s.data.split('-');
+          return '<div class="lin' + (passado ? ' passado' : '') + '"><div class="d">' + p[2] + '.' + p[1] + '<small>' + p[0] + '</small></div><div><b>' + esc(s.artistas ? s.artistas.nome : '') + '</b><p style="font-size:14px;color:var(--t3)">' + (s.fechado ? 'Evento fechado · ' : '') + esc(s.local) + (s.cidade ? ' · ' + esc(s.cidade) : '') + '</p></div><div style="display:flex;gap:6px"><button class="btn linha peq" data-ed="' + s.id + '">Editar</button><button class="btn perigo peq" data-ap="' + s.id + '">Apagar</button></div></div>';
+        };
+        $('listaShows').innerHTML = (fut.length ? fut.map(function (s) { return lin(s); }).join('') : '<p class="aviso info">Nenhum show marcado. Os shows aparecem no site, na agenda.</p>') +
+          (pas.length ? '<p class="mono" style="margin-top:16px">Já aconteceram</p>' + pas.map(function (s) { return lin(s, true); }).join('') : '');
+        Array.prototype.forEach.call(document.querySelectorAll('[data-ap]'), function (b) { b.onclick = function () { if (confirm('Apagar este show?')) sb.from('shows').delete().eq('id', b.getAttribute('data-ap')).then(carregar); }; });
+        Array.prototype.forEach.call(document.querySelectorAll('[data-ed]'), function (b) {
+          b.onclick = function () {
+            var s = r.data.filter(function (x) { return x.id === b.getAttribute('data-ed'); })[0]; editando = s.id;
+            f.artista.value = s.artista_id; f.data.value = s.data; f.cidade.value = s.cidade || ''; f.local.value = s.local || ''; f.link.value = s.link || ''; f.fechado.checked = s.fechado;
+            $('tShow').textContent = 'Editar show'; $('cancelaShow').classList.remove('oculto'); window.scrollTo({ top: 0, behavior: 'smooth' });
+          };
+        });
+      });
+    }
+    $('cancelaShow').onclick = function () { editando = null; f.reset(); $('tShow').textContent = 'Novo show'; $('cancelaShow').classList.add('oculto'); };
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!f.artista.value || !f.data.value) return msg($('avisoS'), 'erro', 'Escolha o artista e a data.');
+      var d = { artista_id: f.artista.value, data: f.data.value, cidade: f.cidade.value.trim(), local: f.local.value.trim(), link: f.link.value.trim(), fechado: f.fechado.checked };
+      (editando ? sb.from('shows').update(d).eq('id', editando) : sb.from('shows').insert(d)).then(function (r) {
+        if (r.error) return msg($('avisoS'), 'erro', r.error.message);
+        msg($('avisoS'), 'ok', 'Show salvo! Já aparece no site.'); $('cancelaShow').onclick(); carregar();
+      });
+    });
+  }
+
+  /* ---------- PEDIDOS ---------- */
+  var ETAPAS = [['novo', 'Novo'], ['negociando', 'Negociando'], ['contrato', 'Contrato enviado'], ['sinal', 'Sinal pago'], ['feito', 'Show feito'], ['perdido', 'Perdido']];
+  function telaPedidos() {
+    var T = $('tela'), filtro = 'abertos';
+    T.innerHTML = '<div class="topo2"><div><p class="mono">Orçamentos que chegaram pelo site</p><h1>Pedidos</h1></div></div><div class="filtros" id="fp"></div><div class="lista" id="lp"><p class="mono">Carregando…</p></div>';
+    function carregar() {
+      sb.from('pedidos').select('*').order('criado_em', { ascending: false }).limit(300).then(function (r) {
+        if (r.error) return msg($('lp'), 'erro', r.error.message);
+        var todos = r.data;
+        var conta = function (k) { return todos.filter(function (p) { return k === 'abertos' ? ['novo', 'negociando', 'contrato', 'sinal'].indexOf(p.status) >= 0 : k === 'todos' || p.status === k; }).length; };
+        var fs = [['abertos', 'Em aberto'], ['todos', 'Todos']].concat(ETAPAS);
+        $('fp').innerHTML = fs.map(function (x) { return '<button type="button" class="' + (filtro === x[0] ? 'on' : '') + '" data-f="' + x[0] + '">' + x[1] + ' (' + conta(x[0]) + ')</button>'; }).join('');
+        Array.prototype.forEach.call($('fp').querySelectorAll('button'), function (b) { b.onclick = function () { filtro = b.getAttribute('data-f'); carregar(); }; });
+        var lista = todos.filter(function (p) { return filtro === 'abertos' ? ['novo', 'negociando', 'contrato', 'sinal'].indexOf(p.status) >= 0 : filtro === 'todos' || p.status === filtro; });
+        $('lp').innerHTML = lista.length ? lista.map(function (p) {
+          var wz = String(p.whatsapp || '').replace(/\D/g, ''); if (wz.length <= 11) wz = '55' + wz;
+          var quando = new Date(p.criado_em).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+          return '<div class="ped' + (p.status === 'novo' ? ' novo' : '') + '"><div><p class="mono">Chegou em ' + quando + '</p><h3 style="font-size:32px;margin:6px 0 10px">' + esc(p.nome) + '</h3><dl>' +
+            '<dt>Atração</dt><dd>' + esc(p.atracao) + '</dd><dt>Evento</dt><dd>' + esc(p.tipo) + ' · ' + esc(p.data_evento) + '</dd><dt>Cidade</dt><dd>' + esc(p.cidade || '-') + '</dd><dt>Público</dt><dd>' + esc(p.publico) + '</dd><dt>Equipamento</dt><dd>' + esc(p.equipamento) + '</dd><dt>Investimento</dt><dd>' + esc(p.investimento) + '</dd><dt>WhatsApp</dt><dd>' + esc(p.whatsapp) + '</dd></dl></div>' +
+            '<div class="lado2"><label class="c">Etapa<select class="i" data-st="' + p.id + '">' + ETAPAS.map(function (e) { return '<option value="' + e[0] + '"' + (p.status === e[0] ? ' selected' : '') + '>' + e[1] + '</option>'; }).join('') + '</select></label>' +
+            '<label class="c">Valor negociado<input class="i" data-vl="' + p.id + '" value="' + esc(p.valor) + '" placeholder="R$"></label>' +
+            '<label class="c">Anotações<textarea class="i" data-nt="' + p.id + '" style="min-height:70px">' + esc(p.notas) + '</textarea></label>' +
+            '<div style="display:flex;gap:6px;flex-wrap:wrap"><a class="btn fogo peq" target="_blank" rel="noopener" href="https://wa.me/' + wz + '?text=' + encodeURIComponent('Olá, ' + p.nome.split(' ')[0] + '! Aqui é da Abre a Porta, sobre o seu pedido de orçamento.') + '">Responder no WhatsApp</a><button class="btn linha peq" data-sv="' + p.id + '">Salvar</button><button class="btn perigo peq" data-dl="' + p.id + '">Apagar</button></div></div></div>';
+        }).join('') : '<p class="aviso info">Nenhum pedido aqui.</p>';
+        Array.prototype.forEach.call(document.querySelectorAll('[data-sv]'), function (b) {
+          b.onclick = function () {
+            var id = b.getAttribute('data-sv');
+            sb.from('pedidos').update({ status: document.querySelector('[data-st="' + id + '"]').value, valor: document.querySelector('[data-vl="' + id + '"]').value, notas: document.querySelector('[data-nt="' + id + '"]').value }).eq('id', id)
+              .then(function (r) { if (r.error) return alert(r.error.message); b.textContent = 'Salvo ✓'; contarNovos(); setTimeout(carregar, 700); });
+          };
+        });
+        Array.prototype.forEach.call(document.querySelectorAll('[data-dl]'), function (b) { b.onclick = function () { if (confirm('Apagar este pedido?')) sb.from('pedidos').delete().eq('id', b.getAttribute('data-dl')).then(function () { contarNovos(); carregar(); }); }; });
+      });
+    }
+    carregar();
+  }
+
+  /* ---------- AJUSTES ---------- */
+  function telaAjustes() {
+    var T = $('tela');
+    T.innerHTML = '<div class="topo2"><div><p class="mono">Site</p><h1>Ajustes</h1></div></div><form class="editor" id="fAj" novalidate><div class="box"><h3>Contato</h3><div class="g3">' +
+      '<label class="c">WhatsApp da agência<small>só números, com 55 e DDD</small><input class="i" name="whatsapp"></label>' +
+      '<label class="c">E-mail<input class="i" name="email" type="email"></label>' +
+      '<label class="c">Instagram<small>sem @</small><input class="i" name="instagram"></label></div></div>' +
+      '<div class="box"><h3>Equipamentos</h3><label class="sw" style="margin-bottom:12px"><input type="checkbox" name="mostrar"> Mostrar equipamentos no site</label>' +
+      '<label class="c">Itens<small>um por linha · nome | descrição</small><textarea class="i" name="equip" style="min-height:140px"></textarea></label></div>' +
+      '<div><button class="btn fogo" type="submit">Salvar ajustes</button></div><div id="avisoAj"></div></form>';
+    var f = $('fAj');
+    sb.from('config').select('*').eq('id', 1).maybeSingle().then(function (r) {
+      var c = r.data || {};
+      f.whatsapp.value = c.whatsapp || ''; f.email.value = c.email || ''; f.instagram.value = c.instagram || '';
+      f.mostrar.checked = c.mostrar_equipamentos !== false;
+      f.equip.value = (c.equipamentos || []).map(function (e) { return e.nome + (e.texto ? ' | ' + e.texto : ''); }).join('\n');
+    });
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var w = f.whatsapp.value.replace(/\D/g, '');
+      if (w && !/^55\d{10,11}$/.test(w)) return msg($('avisoAj'), 'erro', 'O WhatsApp precisa começar com 55 e ter o DDD. Ex.: 5541998440412');
+      sb.from('config').update({ whatsapp: w, email: f.email.value.trim(), instagram: f.instagram.value.trim().replace(/^@/, ''), mostrar_equipamentos: f.mostrar.checked,
+        equipamentos: linhas(f.equip.value).map(function (l) { var p = l.split('|'); return { nome: p[0].trim(), texto: (p.slice(1).join('|') || '').trim() }; }) }).eq('id', 1)
+        .then(function (r) { msg($('avisoAj'), r.error ? 'erro' : 'ok', r.error ? r.error.message : 'Ajustes salvos! O site já usa os dados novos.'); });
+    });
+  }
+})();
+</script>
+</body>
+</html>

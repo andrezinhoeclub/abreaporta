@@ -3,188 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Artista · Abre a Porta</title>
-<meta name="description" content="Conheça a atração, veja vídeos, fotos e agenda, e peça um orçamento para o seu evento.">
-<meta name="theme-color" content="#0B0914">
+<title>Atração · Abre a Porta</title>
+<meta name="description" content="Conheça a atração, veja fotos, vídeos e agenda, e peça um orçamento para o seu evento.">
+<meta name="theme-color" content="#0A0808">
 <link rel="icon" type="image/png" href="site/icone-abreaporta.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Figtree:wght@400;500;700;800&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site/estilo.css">
 <style>
-.capa{position:relative;min-height:100svh;display:flex;align-items:flex-end;background:#000 center/cover no-repeat;overflow:hidden}
-.capa:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,9,20,.55) 0%,rgba(11,9,20,.05) 35%,rgba(11,9,20,.8) 78%,#0B0914 100%)}
-.capa .wrap{position:relative;z-index:1;width:100%;padding-top:120px;padding-bottom:clamp(36px,6vw,64px);display:flex;flex-direction:column;gap:18px}
-.capa .logo{width:clamp(90px,10vw,140px);height:auto}
-.capa h1{font-size:var(--gigante);line-height:.84;letter-spacing:-.065em;text-transform:uppercase}
-.capa .frase{font-size:clamp(18px,2vw,24px);color:var(--creme);max-width:40ch;font-weight:600}
+body{background:var(--fundo)}
+.capa{position:relative;min-height:100svh;display:flex;align-items:flex-end;background:var(--fundo) center/cover no-repeat;overflow:hidden}
+.capa:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 32%,color-mix(in srgb,var(--fundo) 75%,transparent) 72%,var(--fundo) 100%)}
+.capa .wrap{position:relative;z-index:1;width:100%;padding-top:110px;padding-bottom:clamp(36px,6vw,64px);display:flex;flex-direction:column;gap:18px}
+.capa .logo{width:clamp(100px,11vw,170px);height:auto;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5))}
+.capa h1{font-size:clamp(84px,15vw,250px);line-height:.8;color:#fff;text-shadow:0 8px 50px rgba(0,0,0,.5)}
+.capa h1 em{font-style:normal;color:var(--cor)}
+.capa .frase{font-size:clamp(18px,2vw,24px);color:#fff;max-width:36ch;font-weight:700}
 .capa .acoes{display:flex;gap:10px;flex-wrap:wrap}
-.numeros{display:flex;flex-wrap:wrap;border-block:1px solid var(--borda)}
-.num{flex:1 1 200px;padding:26px clamp(16px,3vw,32px);border-right:1px solid var(--borda)}
-.num:last-child{border-right:0}
-.num b{display:block;font-size:clamp(44px,6vw,80px);font-weight:900;letter-spacing:-.06em;line-height:1;color:var(--ouro)}
-.num span{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
-.sobre{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(30px,5vw,80px);align-items:center}
-.sobre .txt{display:flex;flex-direction:column;gap:18px}
-.sobre .txt p{font-size:clamp(17px,1.6vw,20px);color:var(--t2);line-height:1.6}
-.sobre .ret{aspect-ratio:4/5;border-radius:32px;background:var(--card2) center/contain no-repeat;position:relative}
-.sobre .ret.cobre{background-size:cover}
+.cat{display:flex;gap:8px;flex-wrap:wrap}
+.cat span{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:var(--cor);color:#fff}
+.cat span + span{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25)}
+.faixa-nums{background:var(--cor);color:#fff}
+.faixa-nums .wrap{display:flex;flex-wrap:wrap}
+.num{flex:1 1 200px;padding:26px 0}
+.num b{display:block;font-family:var(--f-cartaz);font-size:clamp(64px,7vw,110px);font-weight:900;line-height:.85}
+.num span{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.dois{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,5vw,80px);align-items:center}
+.dois .txt{display:flex;flex-direction:column;gap:18px}
+.dois .txt p{font-size:clamp(17px,1.6vw,20px);color:var(--t2);line-height:1.65}
+.ret{position:relative;display:flex;justify-content:center;align-items:flex-end;min-height:520px}
+.ret .disco{position:absolute;width:86%;aspect-ratio:1;border-radius:50%;left:7%;bottom:5%;background:var(--cor);box-shadow:0 0 120px color-mix(in srgb,var(--cor) 55%,transparent)}
+.ret img.recorte{position:relative;width:94%;filter:drop-shadow(0 30px 50px rgba(0,0,0,.5))}
+.ret .foto{width:100%;aspect-ratio:4/5;border-radius:30px;background:center/cover no-repeat;border:1px solid var(--linha)}
+@media (max-width:860px){.dois{grid-template-columns:1fr}.ret{min-height:0}}
+.dest{list-style:none;margin:0;padding:0;border-top:1px solid var(--linha)}
+.dest li{display:flex;align-items:center;gap:18px;padding:18px 0;border-bottom:1px solid var(--linha);font-family:var(--f-cartaz);font-weight:900;font-size:clamp(34px,4.6vw,72px);text-transform:uppercase;line-height:.95}
+.dest li b{font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--cor2);width:36px;flex:none}
+.dest li:hover{color:var(--cor)}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-@media (max-width:860px){.sobre{grid-template-columns:1fr}.sobre .ret{max-width:420px}}
-.destaques{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.dest{border-radius:26px;padding:26px;background:var(--card);border:1px solid var(--borda);min-height:200px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
-.dest b{font-size:14px;font-weight:900;color:var(--ouro);letter-spacing:.1em}
-.dest h3{font-size:clamp(24px,2.4vw,32px);letter-spacing:-.04em}
-.dest:nth-child(2){background:var(--ouro);color:var(--noite);border-color:var(--ouro)}
-.dest:nth-child(2) b{color:var(--noite)}
 .videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
 .videos iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:22px;background:var(--card)}
 .galeria{columns:3 260px;column-gap:14px}
 .galeria a{display:block;margin-bottom:14px;border-radius:20px;overflow:hidden;background:var(--card);break-inside:avoid}
 .galeria img{width:100%;height:auto;transition:transform .4s}
 .galeria a:hover img{transform:scale(1.04)}
-.kit{border-radius:32px;background:var(--creme);color:var(--noite);padding:clamp(24px,4vw,48px);display:grid;grid-template-columns:1fr 1.4fr;gap:30px}
-.kit .selo{color:#5B2BC9}
+.kit{border-radius:32px;background:var(--cor);color:#fff;padding:clamp(24px,4vw,48px);display:grid;grid-template-columns:1fr 1.3fr;gap:30px;align-items:center}
+.kit h2{font-size:clamp(56px,7vw,110px)}
 .arqs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
-.arq{display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;background:#fff;border:1px solid #E4DED0}
-.arq:hover{border-color:#5B2BC9}
-.arq i{width:46px;height:46px;border-radius:14px;background:var(--noite);color:var(--ouro);display:grid;place-items:center;font-style:normal;font-weight:900;font-size:11px;flex:none}
-.arq b{display:block;font-size:15px}
-.arq span{font-size:12px;color:#6B6680}
+.arq{display:flex;align-items:center;gap:12px;padding:16px;border-radius:18px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.25)}
+.arq:hover{background:rgba(0,0,0,.45)}
+.arq i{width:46px;height:46px;border-radius:14px;background:#fff;color:var(--cor);display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-weight:600;font-size:11px;flex:none}
+.arq b{display:block;font-size:16px}
+.arq span{font-size:12px;opacity:.85}
 @media (max-width:760px){.kit{grid-template-columns:1fr}}
 .redes{display:flex;flex-wrap:wrap;gap:10px}
-.outros{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.outro{position:relative;height:340px;border-radius:28px;overflow:hidden;background:var(--card2) center/cover no-repeat;display:flex;align-items:flex-end;padding:22px}
-.outro:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,9,20,.9),rgba(11,9,20,0) 60%)}
-.outro span{position:relative}
-.outro h3{font-size:34px;letter-spacing:-.05em;text-transform:uppercase}
-.fixo{position:sticky;bottom:0;z-index:30;background:rgba(11,9,20,.92);backdrop-filter:blur(12px);border-top:1px solid var(--borda);padding:10px 0}
+.outros{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.outro{position:relative;height:380px;border-radius:28px;overflow:hidden;background:var(--fundo) center/cover no-repeat;display:flex;align-items:flex-end;padding:22px}
+.outro:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--fundo),rgba(0,0,0,0) 65%)}
+.outro:after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--cor)}
+.outro > span{position:relative}
+.outro h3{font-size:56px;color:#fff}
+.fixo{position:sticky;bottom:0;z-index:30;background:color-mix(in srgb,var(--fundo) 92%,transparent);backdrop-filter:blur(12px);border-top:1px solid var(--linha);padding:10px 0}
 .fixo .wrap{display:flex;align-items:center;gap:14px}
-.fixo b{font-size:17px;font-weight:900;letter-spacing:-.02em}
+.fixo b{font-family:var(--f-cartaz);font-size:26px;text-transform:uppercase}
 .fixo .btn{margin-left:auto;min-height:48px}
+h2.titulo{margin:16px 0 clamp(26px,4vw,44px)}
 .naoachou{min-height:80vh;display:grid;place-items:center;text-align:center;padding:40px 20px}
-h2.titulo{margin-top:14px;margin-bottom:clamp(26px,4vw,44px)}
 </style>
 </head>
 <body>
+<script src="site/config.js"></script>
 <script src="site/dados.js"></script>
+<script src="site/carregar.js"></script>
 
 <header class="topo-site" id="topo"><div class="wrap topo">
   <a href="./" aria-label="Abre a Porta, início"><img src="site/logo-abreaporta.png" alt="Abre a Porta"></a>
-  <nav aria-label="Menu"><a href="./#casting">Casting</a><a href="./#servicos">O que fazemos</a><a href="./#agenda">Agenda</a><a href="./#contato">Contato</a></nav>
-  <a class="btn ouro" href="./#orcamento" id="topoOrc">Contratar</a>
+  <nav aria-label="Menu"><a href="./#casting">Casting</a><a href="./#servicos">Serviços</a><a href="./#agenda">Agenda</a><a href="./#contato">Contato</a></nav>
+  <a class="btn fogo" href="./#orcamento" id="topoOrc">Contratar</a>
 </div></header>
 
 <main id="conteudo"></main>
 
 <footer class="rodape">
   <span style="display:flex;align-items:center;gap:10px"><img src="site/icone-abreaporta.png" alt="">© <span id="ano"></span> Abre a Porta · abreaporta.com.br</span>
-  <span>Desenvolvido por Abre a Porta · artista v2.0</span>
+  <span>Desenvolvido por Abre a Porta · atração v3.0</span>
 </footer>
 
 <script>
 (function () {
-  var S = window.SITE || { artistas: [], shows: [] };
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
-  var bg = function (url, cor) { return 'background-image:' + (url ? 'url(' + esc(url) + '),' : '') + 'radial-gradient(circle at 50% 110%,' + esc(cor || '#7C4DDB') + ' 0%,#1F1A36 75%)'; };
+  var cssUrl = function (u) { return u ? "url('" + String(u).replace(/['"\\()\s]/g, encodeURIComponent) + "')" : 'none'; };
   $('ano').textContent = new Date().getFullYear();
   var topo = $('topo'), t = function () { topo.classList.toggle('solido', window.scrollY > 40); };
   window.addEventListener('scroll', t, { passive: true }); t();
 
-  var id = new URLSearchParams(location.search).get('a');
-  var a = S.artistas.filter(function (x) { return x.id === id && x.publicado; })[0];
-  if (!a) {
-    $('conteudo').innerHTML = '<div class="naoachou"><div style="display:flex;flex-direction:column;gap:18px;align-items:center"><h1 style="font-size:clamp(44px,7vw,90px);text-transform:uppercase">Essa porta<br>não abriu.</h1><p style="color:var(--t3)">Não achamos essa atração. Veja o casting completo.</p><a class="btn ouro seta" href="./#casting">Ver o casting</a></div></div>';
-    return;
-  }
-  document.title = a.nome + ' · Abre a Porta';
-  var orc = S.whatsapp ? 'https://wa.me/' + S.whatsapp + '?text=' + encodeURIComponent('Olá! Quero um orçamento do ' + a.nome + ' pelo site da Abre a Porta.') : './?artista=' + encodeURIComponent(a.id) + '#orcamento';
-  var ext = S.whatsapp ? ' target="_blank" rel="noopener"' : '';
-  $('topoOrc').href = orc;
-  var R = a.redes || {};
+  window.carregarSite().then(function (S) {
+    var slug = new URLSearchParams(location.search).get('a');
+    var a = (S.artistas || []).filter(function (x) { return x.slug === slug && x.publicado; })[0];
+    if (!a) {
+      $('conteudo').innerHTML = '<div class="naoachou"><div style="display:flex;flex-direction:column;gap:18px;align-items:center"><h1 style="font-size:clamp(64px,10vw,140px)">Essa porta<br>não abriu.</h1><p style="color:var(--t3)">Não achamos essa atração. Veja o casting completo.</p><a class="btn fogo seta" href="./#casting">Ver o casting</a></div></div>';
+      return;
+    }
+    document.title = a.nome + ' · Abre a Porta';
+    var r = document.documentElement.style;
+    r.setProperty('--cor', a.cor || '#E8192C'); r.setProperty('--cor2', a.cor2 || '#FFC53D'); r.setProperty('--fundo', a.fundo || '#0A0808');
+    var orc = S.whatsapp ? 'https://wa.me/' + S.whatsapp + '?text=' + encodeURIComponent('Olá! Quero um orçamento do ' + a.nome + ' pelo site da Abre a Porta.') : './?artista=' + encodeURIComponent(a.slug) + '#orcamento';
+    var ext = S.whatsapp ? ' target="_blank" rel="noopener"' : '';
+    $('topoOrc').href = orc; if (S.whatsapp) { $('topoOrc').target = '_blank'; $('topoOrc').rel = 'noopener'; }
+    var R = a.redes || {};
+    var partes = a.nome.split(' '), ult = partes.pop();
 
-  var h = '';
-  /* capa */
-  h += '<section class="capa" style="' + bg(a.capa, a.cor) + ';background-size:cover;background-position:center"><div class="wrap">';
-  if (a.logo) h += '<img class="logo" src="' + esc(a.logo) + '" alt="" onerror="this.remove()">';
-  h += '<div style="display:flex;gap:8px;flex-wrap:wrap">' + (a.categoria ? '<span class="chip" style="background:var(--ouro);color:var(--noite);border-color:var(--ouro)">' + esc(a.categoria.toUpperCase()) + '</span>' : '') + (a.estilo ? '<span class="chip">' + esc(a.estilo) + '</span>' : '') + '</div>';
-  h += '<h1>' + esc(a.nome) + '</h1>';
-  if (a.frase) h += '<p class="frase">' + esc(a.frase) + '</p>';
-  h += '<div class="acoes"><a class="btn ouro seta" href="' + orc + '"' + ext + '>Pedir orçamento</a>';
-  if (a.videos && a.videos.length) h += '<a class="btn linha" href="#videos">Ver o show</a>';
-  if (a.presskit && a.presskit.length) h += '<a class="btn linha" href="#presskit">Press kit</a>';
-  h += '</div></div></section>';
+    var h = '<section class="capa" style="background-image:' + cssUrl(a.capa) + '"><div class="wrap">';
+    if (a.logo) h += '<img class="logo" src="' + esc(a.logo) + '" alt="" onerror="this.remove()">';
+    h += '<div class="cat"><span>' + esc(a.categoria || '') + '</span>' + (a.estilo ? '<span>' + esc(a.estilo) + '</span>' : '') + '</div>';
+    h += '<h1>' + (partes.length ? esc(partes.join(' ')) + '<br>' : '') + '<em>' + esc(ult) + '</em></h1>';
+    if (a.frase) h += '<p class="frase">' + esc(a.frase) + '</p>';
+    h += '<div class="acoes"><a class="btn fogo seta" href="' + orc + '"' + ext + '>Pedir orçamento</a>';
+    if ((a.videos || []).length) h += '<a class="btn contorno" href="#videos">Ver o show</a>';
+    if ((a.presskit || []).length) h += '<a class="btn contorno" href="#presskit">Press kit</a>';
+    h += '</div></div></section>';
 
-  /* números */
-  if (a.numeros && a.numeros.length) h += '<div class="numeros">' + a.numeros.map(function (n) { return '<div class="num"><b>' + esc(n.valor) + '</b><span>' + esc(n.rotulo) + '</span></div>'; }).join('') + '</div>';
+    if ((a.numeros || []).length) h += '<div class="faixa-nums"><div class="wrap">' + a.numeros.map(function (n) { return '<div class="num"><b>' + esc(n.valor) + '</b><span>' + esc(n.rotulo) + '</span></div>'; }).join('') + '</div></div>';
 
-  /* o show */
-  if (a.destaques && a.destaques.length) {
-    h += '<section class="s"><div class="wrap"><p class="selo surge">O show</p><h2 class="titulo surge">O que rola<br>no palco.</h2><div class="destaques">' +
-      a.destaques.map(function (d, i) { return '<div class="dest surge"><b>' + ('0' + (i + 1)).slice(-2) + '</b><h3>' + esc(d) + '</h3></div>'; }).join('') + '</div></div></section>';
-  }
+    if ((a.destaques || []).length) h += '<section class="s"><div class="wrap"><p class="selo surge">O show</p><h2 class="titulo surge">O que rola<br>no palco.</h2><ul class="dest">' +
+      a.destaques.map(function (d, i) { return '<li class="surge"><b>' + ('0' + (i + 1)).slice(-2) + '</b>' + esc(d) + '</li>'; }).join('') + '</ul></div></section>';
 
-  /* sobre */
-  if (a.release && a.release.length) {
-    var ret = a.retrato || a.capa;
-    var transparente = /\.(webp|png)$/i.test(ret || '') && ret === a.retrato && a.retrato !== a.capa;
-    h += '<section class="s" style="padding-top:0"><div class="wrap sobre"><div class="txt surge"><p class="selo">Sobre</p><h2 class="titulo" style="margin-bottom:0">Quem é<br>' + esc(a.nome) + '</h2>' +
-      a.release.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
-      (a.eventos && a.eventos.length ? '<div class="chips">' + a.eventos.map(function (e) { return '<span class="chip">' + esc(e) + '</span>'; }).join('') + '</div>' : '') + '</div>' +
-      (ret ? '<div class="ret surge' + (transparente ? '' : ' cobre') + '" style="' + bg(ret, a.cor) + (transparente ? ';background-size:contain,cover' : ';background-size:cover') + ';background-position:center"></div>' : '') + '</div></section>';
-  }
+    if ((a.release || []).length) {
+      var recorte = a.retrato && a.retrato !== a.capa && /\.(webp|png)(\?|$)/i.test(a.retrato);
+      h += '<section class="s" style="padding-top:0"><div class="wrap dois"><div class="txt surge"><p class="selo">Sobre</p><h2 class="titulo" style="margin:0">Quem é</h2>' +
+        a.release.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
+        ((a.eventos || []).length ? '<div class="chips">' + a.eventos.map(function (e) { return '<span class="chip">' + esc(e) + '</span>'; }).join('') + '</div>' : '') + '</div>' +
+        '<div class="ret surge">' + (recorte ? '<span class="disco"></span><img class="recorte" src="' + esc(a.retrato) + '" alt="' + esc(a.nome) + '" loading="lazy">' : '<div class="foto" style="background-image:' + cssUrl(a.retrato || a.capa) + '"></div>') + '</div></div></section>';
+    }
 
-  /* vídeos */
-  if (a.videos && a.videos.length) {
-    h += '<section class="s" id="videos" style="padding-top:0"><div class="wrap"><p class="selo surge">Vídeos</p><h2 class="titulo surge">Veja o show.</h2><div class="videos">' + a.videos.map(function (v) {
+    if ((a.videos || []).length) h += '<section class="s" id="videos" style="padding-top:0"><div class="wrap"><p class="selo surge">Vídeos</p><h2 class="titulo surge">Veja o show.</h2><div class="videos">' + a.videos.map(function (v) {
       var m = String(v).match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/);
       return m ? '<iframe class="surge" src="https://www.youtube-nocookie.com/embed/' + m[1] + '" title="Vídeo de ' + esc(a.nome) + '" loading="lazy" allowfullscreen></iframe>' : '';
     }).join('') + '</div></div></section>';
-  }
 
-  /* galeria */
-  if (a.fotos && a.fotos.length) {
-    h += '<section class="s" style="padding-top:0"><div class="wrap"><p class="selo surge">Fotos</p><h2 class="titulo surge">Galeria.</h2><div class="galeria">' +
+    if ((a.fotos || []).length) h += '<section class="s" style="padding-top:0"><div class="wrap"><p class="selo surge">Fotos</p><h2 class="titulo surge">Galeria.</h2><div class="galeria">' +
       a.fotos.map(function (f) { return '<a href="' + esc(f) + '" target="_blank" rel="noopener"><img src="' + esc(f) + '" alt="Foto de ' + esc(a.nome) + '" loading="lazy" onerror="this.parentNode.remove()"></a>'; }).join('') + '</div></div></section>';
-  }
 
-  /* press kit */
-  if (a.presskit && a.presskit.length) {
-    h += '<section class="s" id="presskit" style="padding-top:0"><div class="wrap"><div class="kit surge"><div><p class="selo">Para contratantes</p><h2 class="titulo" style="margin:14px 0 12px">Press kit.</h2><p style="color:#4A4560">Tudo para divulgar e montar o palco.</p></div><div class="arqs">' +
-      a.presskit.map(function (k) { return '<a class="arq" href="' + esc(k.arquivo) + '" download target="_blank" rel="noopener"><i>' + esc(k.tipo || 'ARQ') + '</i><div><b>' + esc(k.nome) + '</b><span>Baixar</span></div></a>'; }).join('') + '</div></div></div></section>';
-  }
+    if ((a.presskit || []).length) h += '<section class="s" id="presskit" style="padding-top:0"><div class="wrap"><div class="kit surge"><div><p class="mono" style="opacity:.85">Para contratantes</p><h2 style="margin-top:10px">Press kit.</h2></div><div class="arqs">' +
+      a.presskit.map(function (k) { return '<a class="arq" href="' + esc(k.arquivo) + '" target="_blank" rel="noopener" download><i>' + esc(k.tipo || 'ARQ') + '</i><div><b>' + esc(k.nome) + '</b><span>Baixar</span></div></a>'; }).join('') + '</div></div></div></section>';
 
-  /* agenda */
-  var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
-  var dias = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'], meses = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
-  var shows = (S.shows || []).filter(function (s) { return s.artista === a.id; }).map(function (s) { var p = s.data.split('-'); return Object.assign({}, s, { d: new Date(+p[0], +p[1] - 1, +p[2]) }); })
-    .filter(function (s) { return s.d >= hoje; }).sort(function (x, y) { return x.d - y.d; });
-  h += '<section class="s" style="padding-top:0"><div class="wrap"><p class="selo surge">Agenda</p><h2 class="titulo surge">Próximas datas.</h2>';
-  h += shows.length ? shows.map(function (s) {
-    return '<div class="show surge"><div class="d">' + ('0' + s.d.getDate()).slice(-2) + '.' + ('0' + (s.d.getMonth() + 1)).slice(-2) + '<small>' + dias[s.d.getDay()] + ' · ' + meses[s.d.getMonth()] + '</small></div><div class="q"><strong>' + (s.fechado ? 'Evento fechado' : esc(s.local)) + '</strong><p>' + esc(s.cidade || '') + '</p></div>' +
-      (s.fechado ? '<span class="chip">Data reservada</span>' : (s.link ? '<a class="btn linha" href="' + esc(s.link) + '" target="_blank" rel="noopener">Ingressos</a>' : '<span></span>')) + '</div>';
-  }).join('') : '<p class="vazio surge">Datas abertas. <a href="' + orc + '"' + ext + '>Consulte a disponibilidade para o seu evento →</a></p>';
-  h += '</div></section>';
+    var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+    var dias = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'], meses = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+    var shows = (S.shows || []).filter(function (s) { return s.artista === a.slug; }).map(function (s) { var p = String(s.data).split('-'); return Object.assign({}, s, { d: new Date(+p[0], +p[1] - 1, +p[2]) }); })
+      .filter(function (s) { return s.d >= hoje; }).sort(function (x, y) { return x.d - y.d; });
+    h += '<section class="s" style="padding-top:0"><div class="wrap"><p class="selo surge">Agenda</p><h2 class="titulo surge">Próximas datas.</h2>';
+    h += shows.length ? shows.map(function (s) {
+      return '<div class="show surge"><div class="d">' + ('0' + s.d.getDate()).slice(-2) + '.' + ('0' + (s.d.getMonth() + 1)).slice(-2) + '<small>' + dias[s.d.getDay()] + ' · ' + meses[s.d.getMonth()] + '</small></div><div class="q"><strong>' + (s.fechado ? 'Evento fechado' : esc(s.local)) + '</strong><p>' + esc(s.cidade || '') + '</p></div>' +
+        (s.fechado ? '<span class="chip">Data reservada</span>' : (s.link ? '<a class="btn contorno" href="' + esc(s.link) + '" target="_blank" rel="noopener">Ingressos</a>' : '<span></span>')) + '</div>';
+    }).join('') : '<p class="vazio surge">Datas abertas. <a href="' + orc + '"' + ext + '>Consulte a disponibilidade para o seu evento →</a></p>';
+    h += '</div></section>';
 
-  /* redes */
-  var redes = [];
-  if (R.instagram) redes.push('<a class="btn linha" href="https://instagram.com/' + esc(R.instagram) + '" target="_blank" rel="noopener">Instagram</a>');
-  if (R.tiktok) redes.push('<a class="btn linha" href="https://www.tiktok.com/@' + esc(R.tiktok) + '" target="_blank" rel="noopener">TikTok</a>');
-  if (R.youtube) redes.push('<a class="btn linha" href="' + esc(R.youtube) + '" target="_blank" rel="noopener">YouTube</a>');
-  if (R.site) redes.push('<a class="btn linha" href="' + esc(R.site) + '" target="_blank" rel="noopener">Site oficial</a>');
-  if (redes.length) h += '<section class="s" style="padding-top:0"><div class="wrap"><p class="selo surge" style="margin-bottom:22px">Siga ' + esc(a.nome) + '</p><div class="redes surge">' + redes.join('') + '</div></div></section>';
+    var redes = [];
+    if (R.instagram) redes.push('<a class="btn contorno" href="https://instagram.com/' + esc(R.instagram) + '" target="_blank" rel="noopener">Instagram</a>');
+    if (R.tiktok) redes.push('<a class="btn contorno" href="https://www.tiktok.com/@' + esc(R.tiktok) + '" target="_blank" rel="noopener">TikTok</a>');
+    if (R.youtube) redes.push('<a class="btn contorno" href="' + esc(R.youtube) + '" target="_blank" rel="noopener">YouTube</a>');
+    if (R.site) redes.push('<a class="btn contorno" href="' + esc(R.site) + '" target="_blank" rel="noopener">Site oficial</a>');
+    if (redes.length) h += '<section class="s" style="padding-top:0"><div class="wrap"><p class="selo surge" style="margin-bottom:22px">Siga ' + esc(a.nome) + '</p><div class="redes surge">' + redes.join('') + '</div></div></section>';
 
-  /* outros */
-  var outros = S.artistas.filter(function (x) { return x.publicado && x.id !== a.id; });
-  if (outros.length) {
-    h += '<section class="s" style="padding-top:0"><div class="wrap"><p class="selo surge">Também no casting</p><h2 class="titulo surge">Outras atrações.</h2><div class="outros">' + outros.map(function (o) {
-      return '<a class="outro surge" href="artista.html?a=' + encodeURIComponent(o.id) + '" style="' + bg(o.capa || o.retrato, o.cor) + ';background-size:cover;background-position:center"><span><span class="chip" style="margin-bottom:10px">' + esc(o.categoria || '') + '</span><h3>' + esc(o.nome) + '</h3></span></a>';
+    var outros = (S.artistas || []).filter(function (x) { return x.publicado && x.slug !== a.slug; });
+    if (outros.length) h += '<section class="s" style="padding-top:0"><div class="wrap"><p class="selo surge">Também no casting</p><h2 class="titulo surge">Outras atrações.</h2><div class="outros">' + outros.map(function (o) {
+      return '<a class="outro surge" href="artista.html?a=' + encodeURIComponent(o.slug) + '" style="--cor:' + esc(o.cor || '#E8192C') + ';--fundo:' + esc(o.fundo || '#0A0808') + ';background-image:' + cssUrl(o.capa || o.retrato) + '"><span><span class="chip" style="margin-bottom:10px;background:rgba(0,0,0,.45)">' + esc(o.categoria || '') + '</span><h3>' + esc(o.nome) + '</h3></span></a>';
     }).join('') + '</div></div></section>';
-  }
 
-  h += '<div class="fixo"><div class="wrap"><b>' + esc(a.nome) + '</b><span style="color:var(--t3);font-size:14px">' + esc(a.estilo || '') + '</span><a class="btn ouro seta" href="' + orc + '"' + ext + '>Verificar data</a></div></div>';
-  $('conteudo').innerHTML = h;
+    h += '<div class="fixo"><div class="wrap"><b>' + esc(a.nome) + '</b><a class="btn fogo seta" href="' + orc + '"' + ext + '>Verificar data</a></div></div>';
+    $('conteudo').innerHTML = h;
+  });
 })();
 </script>
 </body>
