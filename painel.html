@@ -131,7 +131,7 @@ main.m{margin-left:240px;padding:26px clamp(16px,3vw,34px) 120px;max-width:1200p
     <button class="btn fogo" type="submit" style="min-height:52px;font-size:16px">Entrar</button>
     <button class="btn linha" type="button" id="esqueci">Esqueci a senha</button>
     <p id="msgLogin"></p>
-    <p class="rod">Desenvolvido por Abre a Porta · painel v1.0</p>
+    <p class="rod">Desenvolvido por Abre a Porta · painel v1.1</p>
   </form>
 </section>
 
@@ -149,7 +149,7 @@ main.m{margin-left:240px;padding:26px clamp(16px,3vw,34px) 120px;max-width:1200p
       <a class="btn linha peq" href="./" target="_blank" rel="noopener">Ver o site ↗</a>
       <button class="btn linha peq" type="button" id="sair">Sair</button>
       <span id="quem"></span>
-      <span>Desenvolvido por Abre a Porta · painel v1.0</span>
+      <span>Desenvolvido por Abre a Porta · painel v1.1</span>
     </div>
   </aside>
   <main class="m" id="tela"></main>
@@ -325,6 +325,10 @@ main.m{margin-left:240px;padding:26px clamp(16px,3vw,34px) 120px;max-width:1200p
         '<label class="c">TikTok<small>só o nome, sem @</small><input class="i" name="r_tiktok" value="' + esc(a.redes.tiktok || '') + '"></label>' +
         '<label class="c">YouTube<small>link do canal</small><input class="i" name="r_youtube" value="' + esc(a.redes.youtube || '') + '"></label>' +
       '</div></div>' +
+      '<div class="box"><h3>Agenda automática</h3><p style="color:var(--t3);font-size:14px;margin-bottom:12px">Se o artista tem site com agenda, os shows de lá aparecem sozinhos no site da Abre a Porta. Deixe em branco se não tiver.</p><div class="g2">' +
+        '<label class="c">Link da agenda do site do artista<small>ex.: https://vovosdohype.com.br/api/agenda</small><input class="i" name="ag_url" value="' + esc((a.agenda_fonte || {}).url || '') + '"></label>' +
+        '<label class="c">Chave pública<small>só se o site do artista usar Supabase</small><input class="i" name="ag_chave" value="' + esc((a.agenda_fonte || {}).chave || '') + '"></label>' +
+      '</div></div>' +
       '<div class="box"><h3>Press kit</h3><p style="color:var(--t3);font-size:14px;margin-bottom:12px">Release, rider técnico, mapa de palco, logos… O contratante baixa direto da página do artista.</p><div class="kitl" id="kit"></div><div style="margin-top:12px"><button type="button" class="btn linha" id="addKit">+ Enviar arquivo</button></div></div>' +
       '<div class="box" style="border-color:#6B5212"><h3>Só você vê</h3><div class="g3">' +
         '<label class="c">Cachê base<input class="i" name="p_cache_base"></label>' +
@@ -408,6 +412,7 @@ main.m{margin-left:240px;padding:26px clamp(16px,3vw,34px) 120px;max-width:1200p
         capa: a.capa || '', retrato: a.retrato || '', logo: a.logo || '', fotos: a.fotos || [], presskit: a.presskit || [],
         destaques: linhas(f.destaques.value), eventos: linhas(f.eventos.value), videos: linhas(f.videos.value), release: paragrafos(f.release.value),
         numeros: linhas(f.numeros.value).map(function (l) { var p = l.split('|'); return { valor: (p[0] || '').trim(), rotulo: (p.slice(1).join('|') || '').trim() }; }).filter(function (n) { return n.valor; }),
+        agenda_fonte: (function () { var u = f.ag_url.value.trim(); if (!/^https:\/\//.test(u)) return {}; var sup = /\.supabase\.co/.test(u); return { tipo: sup ? 'supabase' : 'json', url: u, chave: sup ? f.ag_chave.value.trim() : '', tabela: 'eventos', site: f.r_site.value.trim() }; })(),
         redes: { site: f.r_site.value.trim(), instagram: f.r_instagram.value.trim().replace(/^@/, ''), tiktok: f.r_tiktok.value.trim().replace(/^@/, ''), youtube: f.r_youtube.value.trim() }
       };
       if (!dados.nome) return aviso('erro', 'Coloque o nome do artista.');
