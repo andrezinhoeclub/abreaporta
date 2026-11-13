@@ -38,7 +38,7 @@ var SITE = {
       fotos: [
         'site/artistas/baile-do-ted/palco.jpg',
         'site/artistas/baile-do-ted/dj-neto.jpg',
-        'site/artistas/baile-do-ted/ted-card.jpg',
+        
         'site/artistas/baile-do-ted/contrate.jpg'
       ],
       presskit: [

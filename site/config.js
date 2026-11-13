@@ -1,4 +1,4 @@
-/* =====================================================================
+/* ==================================================================
    LIGAÇÃO COM O SUPABASE · Abre a Porta
    Cole aqui os 2 dados do seu projeto (Supabase → Project Settings → API):
    - supabaseUrl: o "Project URL"            ex.: 'https://abcdxyz.supabase.co'
@@ -7,6 +7,6 @@
    Enquanto estiver vazio, o site usa o arquivo dados.js.
    ===================================================================== */
 var CONFIG_SUPABASE = {
-  supabaseUrl: '',
-  supabaseChave: ''
+  supabaseUrl: 'https://kpebpymzmsfzqsmwlnyl.supabase.co',
+  supabaseChave: 'sb_publishable_MTWYEGjBWkh0_47qZoavkQ_2Ch8TN9G'
 };

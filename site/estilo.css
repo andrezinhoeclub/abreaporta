@@ -35,7 +35,7 @@ img{max-width:100%;display:block}
 .topo-site{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
 .topo-site.solido{background:rgba(10,8,8,.9);backdrop-filter:blur(12px);border-color:var(--linha)}
 .topo{display:flex;align-items:center;gap:18px;height:72px}
-.topo img{width:136px;height:auto}
+.topo img{width:176px;height:auto}
 .topo nav{display:flex;gap:2px;margin-left:auto}
 .topo nav a{font-weight:700;font-size:14px;padding:10px 14px;border-radius:999px;color:var(--t2)}
 .topo nav a:hover{color:#fff;background:rgba(255,241,224,.08)}
