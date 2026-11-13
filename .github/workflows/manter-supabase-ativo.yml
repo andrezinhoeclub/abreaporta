@@ -1,0 +1,20 @@
+# Abre a Porta · mantém o Supabase acordado · v1.0
+# A cada 3 dias faz uma consulta simples no banco, para o plano gratuito
+# não pausar o projeto por falta de uso. Lê a URL e a chave pública do site/config.js.
+name: Manter Supabase ativo
+on:
+  schedule:
+    - cron: "17 11 */3 * *"
+  workflow_dispatch:
+jobs:
+  cutucar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Consulta o banco
+        run: |
+          URL=$(grep -o "supabaseUrl: *'[^']*'" site/config.js | sed "s/.*'\(.*\)'/\1/")
+          CHAVE=$(grep -o "supabaseChave: *'[^']*'" site/config.js | sed "s/.*'\(.*\)'/\1/")
+          if [ -z "$URL" ] || [ -z "$CHAVE" ]; then echo "config.js ainda vazio"; exit 1; fi
+          curl -sf "$URL/rest/v1/config?select=id&limit=1" -H "apikey: $CHAVE"
+          echo " ok"
